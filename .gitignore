@@ -13,3 +13,8 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/public/assets
+/public/css
+/public/js
+/public/fonts
+/public/images

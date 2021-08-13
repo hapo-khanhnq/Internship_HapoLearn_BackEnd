@@ -17,3 +17,65 @@ $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+
+:root {
+  --blue: blue;
+  --black: black;
+  --header_aTag_color: #505353;
+  --header_hoverBackgroundATag_color: #B2D235;
+  --header_hoverATag_color: #FEFFFF;
+  --header_background_color: white;
+  --header_ip_background_color: #FFFBFB;
+  --banner_banner-content_pTag_color: #505353;
+  --banner_banner_content_spanTag_color: #11114E;
+  --mobile_banner_background_color: linear-gradient(180deg, #FFFBFB 87.5%, #E7E9EE 100%);
+  --banner_box_shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  --banner_button_text_color: #FFFFFF;
+  --banner_font_family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --blank_background: linear-gradient(white, #E5E5E5);
+  --main_courses_html_background_color: #3F6185;
+  --main_courses_laravel_background_color: #DC594C;
+  --main_courses_php_background_color: #556598;
+  --other_courses_css_background_color: #24ABE2;
+  --other_courses_ruby_background_color: #E14E40;
+  --other_courses_java_background_color: #1B75BB;
+  --card_body_fonts_family: "utm_bryantlgregular";
+  --main_courses_card_box_shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+  --main_courses_card_text_color: #505353;
+  --main_courses_card_button_box_shadow: inset 0px 1.5px 2px #6F8710;
+  --feedback_vartical_line_color: #D9DADC;
+  --feedback_content_border_color: #E2E2E2;
+  --feedback_star_color: #F2C54F;
+  --feedback_arrow_color: #C4C4C4;
+  --become_member_button_text_color: #90AB26;
+  --become_member_button_hover_color: #D7E897;
+  --chat_box_shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+  --font_Open_Sans: "Open Sans";
+  --login_messenger_button_background: #3184F7;
+  --chat_with_hapo_text_color: #B3B3B3;
+  --message_content_background: #F1F0F0;
+  --chabot_name_color: #7F7F7F;
+  --chat_button_background: #2774DF;
+  --footer_container_background: #505353;
+  --footer_copy_right_background: #454545;
+  --modal_login_with_line_color: #DBDBDB;
+  --modal_google_background_color: #DC4E41;
+  --modal_facebook_backgound_color: #3B5999;
+  --modal_input_backgound_color: #F2F2F2;
+}
+
+@font-face {
+  font-family: "utm_bryantlgregular";
+  src: url(../assets/fonts/utm_bryantlg-webfont.woff2) format("woff2"),
+    url(../assets/fonts/utm_bryantlg-webfont.woff) format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url(../assets/fonts/open-sans-v23-latin-regular.woff2) format("woff2"),
+    url(../assets/fonts/open-sans-v23-latin-regular.woff) format("woff");
+  font-weight: normal;
+  font-style: normal;
+}

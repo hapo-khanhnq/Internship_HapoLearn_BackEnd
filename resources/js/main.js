@@ -1,0 +1,75 @@
+$(function () {
+  $('.fa-bars').click(function () {
+    $(this).toggleClass('fa-times');
+    $('header').toggleClass('header-active');
+    $('.navbar').toggleClass('navbar-active');
+    $('header').toggleClass('ip-header-active');
+  });
+
+  $('.header-link').click(function () {
+    $('.header-link').removeClass('header-link-active');
+    $(this).addClass('header-link-active');
+    $('.fa-bars').removeClass('fa-times');
+    $('.navbar-toggler').addClass('collapsed');
+    $('.collapse').removeClass('show');
+    $('header').removeClass('ip-header-active');
+    $('.navbar').removeClass('navbar-active');
+    $('header').removeClass('header-active');
+  });
+
+  $('.slider').slick({
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    prevArrow: '<div class="left-arrow"><i class="fas fa-angle-left"></i></div>',
+    nextArrow: '<div class="right-arrow"><i class="fas fa-angle-right"></i></div>',
+    autoplay: true,
+    autoplaySpeed: 2000,
+    responsive: [{
+        breakpoint: 769,
+        settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+        }
+      },
+
+      {
+        breakpoint: 425,
+        settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+        }
+      }
+    ]
+  });
+
+  $('.chat-button').click(function () {
+    $('.chat-content').addClass('content-show');
+  });
+
+  $('.cancel-button').click(function () {
+    $('.chat-content').removeClass('content-show');
+  });
+
+  $('[data-toggle="tooltip"]').tooltip();
+
+  $('#logout').click(function (event) {
+    event.preventDefault();
+    $('#logout-form').submit();
+  });
+
+  if ($("#loginForm input").hasClass("is-invalid")) {
+    $("#loginModal").modal("show");
+  }
+
+  if ($("#registerForm input").hasClass("is-invalid")) {
+    $("#loginModal").modal("show");
+    $("#register-tab").trigger("click");
+  }
+
+  window.setTimeout(function () {
+    $(".alert").fadeTo(200, 0).slideUp(200, function () {
+        $(this).remove();
+    });
+  }, 1000);
+});
