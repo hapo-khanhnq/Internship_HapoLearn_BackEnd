@@ -1962,7 +1962,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!******************************!*\
   !*** ./resources/js/main.js ***!
   \******************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+var _require = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"),
+    event = _require.event;
 
 $(document).ready(function () {
   $('.fa-bars').click(function () {
@@ -2010,6 +2013,25 @@ $(document).ready(function () {
     $('.chat-content').removeClass('content-show');
   });
   $('[data-toggle="tooltip"]').tooltip();
+  $('.logout').click(function (event) {
+    event.preventDefault();
+    $('#logout-form').submit();
+  });
+
+  if ($(".login-form input").hasClass("is-invalid")) {
+    $("#loginModal").modal("show");
+  }
+
+  if ($(".register-form input").hasClass("is-invalid")) {
+    $("#loginModal").modal("show");
+    $("#register-tab").trigger("click");
+  }
+
+  window.setTimeout(function () {
+    $(".alert").fadeTo(200, 0).slideUp(200, function () {
+      $(this).remove();
+    });
+  }, 1000);
 });
 
 /***/ }),

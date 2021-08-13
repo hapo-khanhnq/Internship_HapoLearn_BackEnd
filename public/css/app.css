@@ -10165,6 +10165,13 @@ header li .header-link-active {
   background-color: var(--header_hoverBackgroundATag_color);
 }
 
+.alert-success {
+  color: var(--header_hoverATag_color);
+  background-color: var(--header_hoverBackgroundATag_color);
+  border-color: #c7eed8;
+  text-align: center;
+}
+
 .banner-section {
   width: 100%;
   height: 655px;
