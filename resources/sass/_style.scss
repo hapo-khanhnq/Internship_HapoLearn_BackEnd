@@ -1,0 +1,31 @@
+* {
+  font-family: $font-family-sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-weight: 400;
+  transition: all .05s linear;
+  ::selection {
+    background: var(--black);
+    color: white;
+  }
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+section {
+  overflow: hidden;
+}
+
+.alert-success {
+  color: var(--header_hoverATag_color);
+  background-color: var(--header_hoverBackgroundATag_color);
+  border-color: #c7eed8;
+  text-align: center;
+}
