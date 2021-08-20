@@ -22,8 +22,8 @@ class CoursesUserFactory extends Factory
     public function definition()
     {
         return [
-            'course_id' => rand(10, 30),
-            'user_id' => rand(10, 30)
+            'course_id' => rand(10, 200),
+            'user_id' => rand(10, 200)
         ];
     }
 }

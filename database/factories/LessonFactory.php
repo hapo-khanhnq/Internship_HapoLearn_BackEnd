@@ -26,6 +26,7 @@ class LessonFactory extends Factory
             'description' => $this->faker->text(),
             'requirement' => $this->faker->realText(),
             'content' => $this->faker->realText(),
+            'learn_time' => rand(1, 10),
             'course_id' => rand(10, 30),
         ];
     }

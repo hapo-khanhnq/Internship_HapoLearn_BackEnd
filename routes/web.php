@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return view('user.home');
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/courses', 'App\Http\Controllers\CoursesController@index')->name('courses');
+Route::get('/search-course', 'App\Http\Controllers\CoursesController@searchCourses')->name('courses.search');
