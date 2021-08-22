@@ -79,7 +79,7 @@ class Course extends Model
 
         return $query;
     }
-    
+
     public function scopeFilter($query, $data)
     {
 
@@ -97,22 +97,24 @@ class Course extends Model
             }
         }
 
-        if(isset($data['learn_time'])) {
-            if($data['learn_time'] == 'asc') {
-                $query->addSelect(['learn_course_time' => Lesson::selectRaw('sum(learn_time) as total_time')
+        if (isset($data['learn_time'])) {
+            if ($data['learn_time'] == 'asc') {
+                $query->addSelect([
+                    'learn_course_time' => Lesson::selectRaw('sum(learn_time) as total_time')
                         ->whereColumn('course_id', 'courses.id')
                         ->groupBy('course_id')
                 ])->orderBy('learn_course_time');
             } else {
-                $query->addSelect(['learn_course_time' => Lesson::selectRaw('sum(learn_time) as total_time')
+                $query->addSelect([
+                    'learn_course_time' => Lesson::selectRaw('sum(learn_time) as total_time')
                         ->whereColumn('course_id', 'courses.id')
                         ->groupBy('course_id')
                 ])->orderByDesc('learn_course_time');
             }
         }
 
-        if(isset($data['number_of_lesson'])) {
-            if($data['number_of_lesson'] == 'asc') {
+        if (isset($data['number_of_lesson'])) {
+            if ($data['number_of_lesson'] == 'asc') {
                 $query->withCount('lessons')->orderBy('lessons_count');
             } else {
                 $query->withCount('lessons')->orderByDesc('lessons_count');
@@ -125,22 +127,24 @@ class Course extends Model
             });
         }
 
-        if(isset($data['rating'])) {
-            if($data['rating'] == 'asc') {
-                $query->addSelect(['averate_of_course_rate'=> Review::selectRaw('avg(rate) as avg_rate')
+        if (isset($data['rating'])) {
+            if ($data['rating'] == 'asc') {
+                $query->addSelect([
+                    'averate_of_course_rate' => Review::selectRaw('avg(rate) as avg_rate')
                         ->whereColumn('location_id', 'courses.id')
                         ->where('locationType', Review::LOCATION_TYPE['course'])
                 ])->orderBy('averate_of_course_rate');
             } else {
-                $query->addSelect(['averate_of_course_rate'=> Review::selectRaw('avg(rate) as avg_rate')
+                $query->addSelect([
+                    'averate_of_course_rate' => Review::selectRaw('avg(rate) as avg_rate')
                         ->whereColumn('location_id', 'courses.id')
                         ->where('locationType', Review::LOCATION_TYPE['course'])
                 ])->orderByDesc('averate_of_course_rate');
             }
         }
 
-        if(isset($data['filter_status'])) {
-            if($data['filter_status'] == 'oldest') {
+        if (isset($data['filter_status'])) {
+            if ($data['filter_status'] == 'oldest') {
                 $query->orderBy('id');
             } else {
                 $query->orderByDesc('id');
@@ -148,5 +152,5 @@ class Course extends Model
         }
 
         return $query;
-    } 
+    }
 }

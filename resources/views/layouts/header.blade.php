@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li>
-                    <a href="{{ route('home') }}" class="header-link header-link-active">HOME</a>
+                    <a @if (Auth::check()) href="{{ route('home') }}" @else href="/" @endif class="header-link header-link-active">HOME</a>
                 </li>
                 <li>
                     <a href="{{ route('courses') }}" class="header-link">ALL&nbsp;COURSES</a>

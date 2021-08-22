@@ -7,8 +7,10 @@
             @csrf
             <div class="d-flex flex-row">
                 <a class="filter-button" data-toggle="collapse" href="#collapseFilterMenu" role="button" aria-expanded="false" aria-controls="collapseFilterMenu"><img src="{{ asset('images/filter_icon.png') }}" alt="Filter icon" class="filter-icon">&nbsp;Filter</a>
-                <input type="text" class="search-input" name="course_keyword" placeholder="Search..." @if (isset($keyword)) value="{{ $keyword }}" @endif>
-                <i class="fas fa-search search-icon"></i>
+                <div class="form-search-input">
+                    <input type="text" class="search-input" name="course_keyword" placeholder="Search..." @if (isset($keyword)) value="{{ $keyword }}" @endif>
+                    <i class="fas fa-search search-icon"></i>
+                </div>
                 <button type="submit" class="search-button">
                     Search
                 </button>
@@ -27,13 +29,8 @@
                             <input type="radio" hidden id="oldest" name="filter_status" value="oldest" @if (request('filter_status') == 'oldest') checked @endif>
                             <label for="oldest" class="filter-status d-flex d-flex align-items-center justify-content-center">Oldest</label>
                         </div>
-                        <!-- <div class="form-group mx-1">
-                            <select name="teacher" id="teacher" class="filter-select-menu">
-                                <option value="" selected>Teacher</option>
-                            </select>
-                        </div> -->
                         <div class="form-group mx-1">
-                            <select class="js-example-basic-single" name="teacher" id="teacher">
+                            <select class="filter-select2-menu" name="teacher" id="teacher">
                                 <option value="">Teacher</option>
                                 @foreach ($teachers as $teacher)
                                 <option value="{{ $teacher->id }}" @if (request('teacher') == $teacher->id) selected @endif>{{ $teacher->name }}</option>
@@ -61,13 +58,8 @@
                                 <option value="desc" @if (request('number_of_lesson') == 'desc') selected @endif>Decrease</option>
                             </select>
                         </div>
-                        <!-- <div class="form-group mx-1">
-                            <select name="tag" id="tag" class="filter-select-menu">
-                                <option value="" selected>Tags</option>
-                            </select>
-                        </div> -->
                         <div class="form-group mx-1">
-                            <select class="js-example-basic-single" name="tag" id="tag">
+                            <select class="filter-select2-menu" name="tag" id="tag">
                                 <option value="">Tags</option>
                                 @foreach ($tags as $tag)
                                 <option value="{{ $tag->id }}" @if (request('tag') == $tag->id) selected @endif>#{{ $tag->name }}</option>
@@ -124,7 +116,6 @@
                         </div>
                         <div class="col-4 pb-3">
                             <p class="m-0">Time</p>
-                            <!-- <b>{{ $course->learn_time }}</b> -->
                             @if ($course->learn_time < 60)
                                 <b>{{ $course->learn_time }} min</b>
                             @else
@@ -136,8 +127,7 @@
             </div>
             @endforeach
         </div>
-        {{ $courses->links('user.pagination') }}
+        {{ $courses->appends($_GET)->links('user.pagination') }}
     </div>
-    <!-- {{ $courses->links() }} -->
 </section>
 @endsection

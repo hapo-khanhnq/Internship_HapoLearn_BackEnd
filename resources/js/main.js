@@ -73,17 +73,11 @@ $(function () {
     });
   }, 1000);
 
-//   let path = window.location.pathname;
-//   $('.header-link').each(function() {
-//     if(path === $(this).attr('href')) {
-//       $('.header-link').removeClass('header-link-active');
-//       $(this).addClass('header-link-active');
-//     }
-//  });
-  $('.js-example-basic-single').select2();
+  $('.filter-select2-menu').select2();
 
   $("#clearFilter").click(function(){
     $("input:radio").val("latest").change();
+    $(".search-input").val("").change();
     $("#latest").prop("checked", true);
     $("select").val("").change();
   });
