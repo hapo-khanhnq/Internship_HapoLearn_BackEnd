@@ -70,18 +70,12 @@ class Course extends Model
         return $this->reviews()->avg('rate');
     }
 
-    public function scopeSearch($query, $data)
-    {
-        if (isset($data['course_keyword'])) {
-            $query->where('name', 'like', '%' . $data['course_keyword'] . '%')
-                ->orWhere('description', 'like', '%' . $data['course_keyword'] . '%');
-        }
-
-        return $query;
-    }
-
     public function scopeFilter($query, $data)
     {
+        if (isset($data['keyword'])) {
+            $query->where('name', 'like', '%' . $data['keyword'] . '%')
+                ->orWhere('description', 'like', '%' . $data['keyword'] . '%');
+        }
 
         if (isset($data['teacher'])) {
             $query->whereHas('users', function ($subquery) use ($data) {
@@ -90,7 +84,7 @@ class Course extends Model
         }
 
         if (isset($data['number_of_learner'])) {
-            if ($data['number_of_learner'] == 'asc') {
+            if ($data['number_of_learner'] == config('variables.orderBy.asc')) {
                 $query->withCount('students')->orderBy('students_count');
             } else {
                 $query->withCount('students')->orderByDesc('students_count');
@@ -98,7 +92,7 @@ class Course extends Model
         }
 
         if (isset($data['learn_time'])) {
-            if ($data['learn_time'] == 'asc') {
+            if ($data['learn_time'] == config('variables.orderBy.asc')) {
                 $query->withSum('lessons', 'learn_time')->orderBy('lessons_sum_learn_time');
             } else {
                 $query->withSum('lessons', 'learn_time')->orderByDesc('lessons_sum_learn_time');
@@ -106,7 +100,7 @@ class Course extends Model
         }
 
         if (isset($data['number_of_lesson'])) {
-            if ($data['number_of_lesson'] == 'asc') {
+            if ($data['number_of_lesson'] == config('variables.orderBy.asc')) {
                 $query->withCount('lessons')->orderBy('lessons_count');
             } else {
                 $query->withCount('lessons')->orderByDesc('lessons_count');
@@ -120,7 +114,7 @@ class Course extends Model
         }
 
         if (isset($data['rating'])) {
-            if ($data['rating'] == 'asc') {
+            if ($data['rating'] == config('variables.orderBy.asc')) {
                 $query->withAvg('reviews', 'rate')->orderBy('reviews_avg_rate');
             } else {
                 $query->withAvg('reviews', 'rate')->orderByDesc('reviews_avg_rate');
@@ -128,7 +122,7 @@ class Course extends Model
         }
 
         if (isset($data['filter_status'])) {
-            if ($data['filter_status'] == 'oldest') {
+            if ($data['filter_status'] == config('variables.filterStatus.oldest')) {
                 $query->orderBy('id');
             } else {
                 $query->orderByDesc('id');

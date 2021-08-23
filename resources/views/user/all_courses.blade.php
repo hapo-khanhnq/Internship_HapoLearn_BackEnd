@@ -8,7 +8,7 @@
             <div class="d-flex flex-row">
                 <a class="filter-button" data-toggle="collapse" href="#collapseFilterMenu" role="button" aria-expanded="false" aria-controls="collapseFilterMenu"><img src="{{ asset('images/filter_icon.png') }}" alt="Filter icon" class="filter-icon">&nbsp;Filter</a>
                 <div class="form-search-input">
-                    <input type="text" class="search-input" name="course_keyword" placeholder="Search..." @if (isset($keyword)) value="{{ $keyword }}" @endif>
+                    <input type="text" class="search-input" name="keyword" placeholder="Search..." @if (isset($keyword)) value="{{ $keyword }}" @endif>
                     <i class="fas fa-search search-icon"></i>
                 </div>
                 <button type="submit" class="search-button">
@@ -22,11 +22,11 @@
                     </div>
                     <div class="col-11 d-flex flex-wrap">
                         <div class="form-group mx-1">
-                            <input type="radio" hidden id="latest" name="filter_status" value="latest" checked>
+                            <input type="radio" hidden id="latest" name="filter_status" value="{{ config('variables.filterStatus.latest') }}" checked>
                             <label for="latest" class="filter-status d-flex d-flex align-items-center justify-content-center">Latest</label>
                         </div>
                         <div class="form-group mx-1">
-                            <input type="radio" hidden id="oldest" name="filter_status" value="oldest" @if (request('filter_status') == 'oldest') checked @endif>
+                            <input type="radio" hidden id="oldest" name="filter_status" value="{{ config('variables.filterStatus.oldest') }}" @if (request('filter_status') == config('variables.filterStatus.oldest')) checked @endif>
                             <label for="oldest" class="filter-status d-flex d-flex align-items-center justify-content-center">Oldest</label>
                         </div>
                         <div class="form-group mx-1">
@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group mx-1">
                             <select name="number_of_learner" id="learner" class="filter-select-menu">
-                                <option value="" selected>Number Of Learn</option>
+                                <option value="" selected>Number Of Learner</option>
                                 <option value="asc"  @if (request('number_of_learner') == 'asc') selected @endif>Ascending</option>
                                 <option value="desc" @if (request('number_of_learner') == 'desc') selected @endif>Decrease</option>
                             </select>

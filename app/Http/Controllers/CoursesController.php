@@ -22,12 +22,12 @@ class CoursesController extends Controller
         $teachers = User::where('role', User::ROLE['teacher'])->get();
         $tags = Tag::get();
         $data = $request->all();
-        if (isset($data['course_keyword'])) {
-            $keyword = $data['course_keyword'];
+        if (isset($data['keyword'])) {
+            $keyword = $data['keyword'];
         } else {
             $keyword = '';
         }
-        $courses = Course::search($data)->filter($data)->paginate(config('variables.pagination'));
+        $courses = Course::query()->filter($data)->paginate(config('variables.pagination'));
         return view('user.all_courses', compact('courses', 'teachers', 'keyword', 'tags'));
     }
 }
