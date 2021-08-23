@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CoursesController;
-use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +19,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/courses', [CoursesController::class, 'index'])->name('courses');
-Route::get('/search-course', [CoursesController::class, 'searchCourses'])->name('courses.search');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/courses', 'App\Http\Controllers\CoursesController@index')->name('courses');
+Route::get('/search-course', 'App\Http\Controllers\CoursesController@searchCourses')->name('courses.search');
