@@ -89,9 +89,12 @@
                     <div class="row course-infor">
                         <div class="col-3 pr-0">
                             <div class="course-image">
-                                <img class="course-img" src="images/html_img.png" alt="html_image">
+                                @if ($course->image_path == NULL)
+                                    <img class="course-img" src="images/default_course_img.png" alt="default_course_image">
+                                @else
+                                    <img class="course-img" src="{{ $course->image_path }}" alt="default_course_image">
+                                @endif
                             </div>
-                            <p>{{ number_format(($course->average_of_rate), 1, '.', '') }} / 5</p>
                         </div>
                         <div class="col-9">
                             <div class="course-title">

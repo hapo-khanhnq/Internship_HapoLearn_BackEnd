@@ -25,8 +25,6 @@ class CourseFactory extends Factory
             'name' => $this->faker->name(),
             'image_path' => $this->faker->imageUrl(),
             'description' => $this->faker->realText(),
-            // 'learn_time' => rand(1, 10),
-            // 'quizzes' => rand(0, 100),
             'price' => rand(0, 100)
         ];
     }
