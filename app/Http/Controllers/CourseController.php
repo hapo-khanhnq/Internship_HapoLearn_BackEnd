@@ -14,7 +14,7 @@ class CourseController extends Controller
         $teachers = User::where('role', User::ROLE['teacher'])->get();
         $tags = Tag::get();
         $courses = Course::orderByDesc('id')->paginate(config('variables.pagination'));
-        return view('user.course.index', compact('courses', 'teachers', 'tags'));
+        return view('course.index', compact('courses', 'teachers', 'tags'));
     }
 
     public function searchCourses(Request $request)
@@ -28,6 +28,7 @@ class CourseController extends Controller
             $keyword = '';
         }
         $courses = Course::query()->filter($data)->paginate(config('variables.pagination'));
-        return view('user.course.index', compact('courses', 'teachers', 'keyword', 'tags'));
+        return view('course.index', compact('courses', 'teachers', 'keyword', 'tags'));
     }
+
 }

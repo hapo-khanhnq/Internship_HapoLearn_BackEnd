@@ -84,7 +84,7 @@
     <div class="container p-0 all-courses-container">
         <div class="row">
             @foreach ($courses as $course)
-            @include('user.course._course', $course)
+            @include('course._course', $course)
             @endforeach
         </div>
         {{ $courses->appends($_GET)->links('user.pagination') }}
