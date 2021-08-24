@@ -72,4 +72,13 @@ $(function () {
         $(this).remove();
     });
   }, 1000);
+
+  $('.filter-select2-menu').select2();
+
+  $("#clearFilter").click(function(){
+    $("input:radio").val("latest").change();
+    $(".search-input").val("").change();
+    $("#latest").prop("checked", true);
+    $("select").val("").change();
+  });
 });

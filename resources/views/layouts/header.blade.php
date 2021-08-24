@@ -7,10 +7,10 @@
         <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li>
-                    <a href="#" class="header-link header-link-active">HOME</a>
+                    <a @if (Auth::check()) href="{{ route('home') }}" @else href="/" @endif class="header-link @if((Route::currentRouteName() == '') || (Route::currentRouteName() == 'home')) header-link-active @endif">HOME</a>
                 </li>
                 <li>
-                    <a href="#" class="header-link">ALL&nbsp;COURSES</a>
+                    <a href="{{ route('courses') }}" class="header-link @if((Route::currentRouteName() == 'courses') || (Route::currentRouteName() == 'courses.search')) header-link-active @endif">ALL&nbsp;COURSES</a>
                 </li>
                 @if (Auth::check())
                 @csrf
