@@ -7,14 +7,14 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class CoursesController extends Controller
+class CourseController extends Controller
 {
     public function index()
     {
         $teachers = User::where('role', User::ROLE['teacher'])->get();
         $tags = Tag::get();
-        $courses = Course::orderBy('id', 'desc')->paginate(config('variables.pagination'));
-        return view('user.all_courses', compact('courses', 'teachers', 'tags'));
+        $courses = Course::orderByDesc('id')->paginate(config('variables.pagination'));
+        return view('user.course.index', compact('courses', 'teachers', 'tags'));
     }
 
     public function searchCourses(Request $request)
@@ -28,6 +28,6 @@ class CoursesController extends Controller
             $keyword = '';
         }
         $courses = Course::query()->filter($data)->paginate(config('variables.pagination'));
-        return view('user.all_courses', compact('courses', 'teachers', 'keyword', 'tags'));
+        return view('user.course.index', compact('courses', 'teachers', 'keyword', 'tags'));
     }
 }

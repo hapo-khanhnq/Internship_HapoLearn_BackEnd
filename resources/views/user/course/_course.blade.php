@@ -3,10 +3,10 @@
         <div class="row course-infor">
             <div class="col-3 pr-0">
                 <div class="course-image">
-                    @if ($course->image_path == NULL)
-                        <img class="course-img" src="images/default_course_img.png" alt="default_course_image">
+                    @if ($course->image_path)
+                    <img class="course-img" src="{{ $course->image_path }}" alt="course_image">
                     @else
-                        <img class="course-img" src="{{ $course->image_path }}" alt="default_course_image">
+                    <img class="course-img" src="{{ asset('images/default_course_img.png') }}" alt="default_course_image">
                     @endif
                 </div>
             </div>
