@@ -30,4 +30,28 @@ class CourseController extends Controller
         $courses = Course::query()->filter($data)->paginate(config('variables.pagination'));
         return view('course.index', compact('courses', 'teachers', 'keyword', 'tags'));
     }
+
+    public function showCourseDetails($id)
+    {
+        $detailsCourse = Course::find($id);
+        $lessons = $detailsCourse->lessons()->paginate(config('variables.lesson-pagination'));
+        $teachers = $detailsCourse->teachers()->get();
+        return view('course.course_details', compact('detailsCourse', 'lessons', 'teachers'));
+    }
+
+    public function searchLessonsOfCourseDetail(Request $request, $id)
+    {
+        $data = $request->all();
+        if (isset($data['keyword'])) {
+            $keyword = $data['keyword'];
+        } else {
+            $keyword = '';
+        }
+        $detailsCourse = Course::find($id);
+        $lessons = $detailsCourse->lessons()
+            ->where('name', 'like', '%' . $keyword . '%')
+            ->paginate(config('variables.lesson-pagination'));
+        $teachers = $detailsCourse->teachers()->get();
+        return view('course.course_details', compact('detailsCourse', 'lessons', 'keyword', 'teachers'));
+    }
 }

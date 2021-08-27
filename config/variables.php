@@ -13,4 +13,8 @@ return [
         'oldest' => 'oldest',
         'null' => ''
     ],
+
+    'lesson-pagination' => '20',
+
+    'numberOfOtherCourses' => '5',
 ];

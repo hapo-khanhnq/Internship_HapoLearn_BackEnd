@@ -30,7 +30,7 @@ class Course extends Model
         return $this->belongsToMany(User::class, 'courses_users', 'course_id', 'user_id');
     }
 
-    public function teacher()
+    public function teachers()
     {
         return $this->users()->where('role', User::ROLE['teacher']);
     }
@@ -68,6 +68,11 @@ class Course extends Model
     public function getAverageOfRateAttribute()
     {
         return $this->reviews()->avg('rate');
+    }
+
+    public function getOtherCoursesAttribute()
+    {
+        return $this->withCount('students')->orderByDesc('students_count')->take(config('variables.numberOfOtherCourses'))->get();
     }
 
     public function scopeFilter($query, $data)

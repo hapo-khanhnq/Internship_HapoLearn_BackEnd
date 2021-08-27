@@ -33,5 +33,13 @@
     "/fonts/open-sans-v23-latin-regular.woff": "/fonts/open-sans-v23-latin-regular.woff",
     "/fonts/open-sans-v23-latin-regular.woff2": "/fonts/open-sans-v23-latin-regular.woff2",
     "/fonts/utm_bryantlg-webfont.woff": "/fonts/utm_bryantlg-webfont.woff",
-    "/fonts/utm_bryantlg-webfont.woff2": "/fonts/utm_bryantlg-webfont.woff2"
+    "/fonts/utm_bryantlg-webfont.woff2": "/fonts/utm_bryantlg-webfont.woff2",
+    "/images/icon_facebook.png": "/images/icon_facebook.png",
+    "/images/icon_google.png": "/images/icon_google.png",
+    "/images/icon_slack.png": "/images/icon_slack.png",
+    "/images/learner_icon.png": "/images/learner_icon.png",
+    "/images/lesson_icon.png": "/images/lesson_icon.png",
+    "/images/price_icon.png": "/images/price_icon.png",
+    "/images/tag_icon.png": "/images/tag_icon.png",
+    "/images/time_icon.png": "/images/time_icon.png"
 }
