@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
 {
@@ -65,14 +66,45 @@ class Course extends Model
         return $this->reviews()->count();
     }
 
+    public function getTotalOfRateAttribute()
+    {
+        return $this->reviews()->whereNotNull('rate')->count();
+    }
+
     public function getAverageOfRateAttribute()
     {
-        return $this->reviews()->avg('rate');
+        return $this->reviews()->whereNotNull('rate')->avg('rate');
     }
 
     public function getOtherCoursesAttribute()
     {
-        return $this->withCount('students')->orderByDesc('students_count')->take(config('variables.numberOfOtherCourses'))->get();
+        return $this->withCount('students')->where('id', '<>', $this->id)->orderByDesc('students_count')->take(config('variables.numberOfOtherCourses'))->get();
+    }
+
+    public function getCheckStudentInCourseAttribute()
+    {
+        $checkStudent = [];
+        if (Auth::user()) {
+            $checkStudent = $this->users()->wherePivot('user_id', Auth::user()->id)->get();
+        }
+        return count($checkStudent);
+    }
+
+    public function getNumberOfRate($rate)
+    {
+        return $this->reviews()->where('rate', $rate)->count();
+    }
+
+    public function getPercentOfNumberOfRate($rate)
+    {
+        if ($this->reviews()->whereNotNull('rate')->count() != 0) {
+            $totalRate = $this->reviews()->whereNotNull('rate')->count();
+            $numberOfRate = $this->getNumberOfRate($rate);
+            $percent = floor($numberOfRate / $totalRate * 100);
+        } else {
+            $percent = 0;
+        }
+        return $percent;
     }
 
     public function scopeFilter($query, $data)

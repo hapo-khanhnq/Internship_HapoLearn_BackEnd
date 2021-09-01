@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Lesson;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class CourseController extends Controller
 {
@@ -31,27 +34,33 @@ class CourseController extends Controller
         return view('course.index', compact('courses', 'teachers', 'keyword', 'tags'));
     }
 
-    public function showCourseDetails($id)
+    public function details($id)
     {
-        $detailsCourse = Course::find($id);
-        $lessons = $detailsCourse->lessons()->paginate(config('variables.lesson-pagination'));
-        $teachers = $detailsCourse->teachers()->get();
-        return view('course.course_details', compact('detailsCourse', 'lessons', 'teachers'));
+        $course = Course::find($id);
+        $lessons = $course->lessons()->paginate(config('variables.lesson-pagination'));
+        $teachers = $course->teachers()->get();
+        return view('course.course_details', compact('course', 'lessons', 'teachers'));
     }
 
-    public function searchLessonsOfCourseDetail(Request $request, $id)
+    public function joinCourse($id)
     {
-        $data = $request->all();
-        if (isset($data['keyword'])) {
-            $keyword = $data['keyword'];
-        } else {
-            $keyword = '';
+        $course = Course::findOrFail($id);
+        $course->students()->attach(Auth::user()->id, ['created_at' => Carbon::now()]);
+        $lessons = $course->lessons()->get();
+        foreach ($lessons as $lesson) {
+            $lesson->students()->attach(Auth::user()->id, ['created_at' => Carbon::now()]);
         }
-        $detailsCourse = Course::find($id);
-        $lessons = $detailsCourse->lessons()
-            ->where('name', 'like', '%' . $keyword . '%')
-            ->paginate(config('variables.lesson-pagination'));
-        $teachers = $detailsCourse->teachers()->get();
-        return view('course.course_details', compact('detailsCourse', 'lessons', 'keyword', 'teachers'));
+        return redirect()->route('course.details', $id);
+    }
+
+    public function leaveCourse($id)
+    {
+        $course = Course::findOrFail($id);
+        $course->users()->detach(Auth::user()->id);
+        $lessons = $course->lessons()->get();
+        foreach ($lessons as $lesson) {
+            $lesson->students()->detach(Auth::user()->id, ['created_at' => Carbon::now()]);
+        }
+        return redirect()->route('course.details', $id);
     }
 }

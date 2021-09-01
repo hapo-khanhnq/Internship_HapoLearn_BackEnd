@@ -9,8 +9,8 @@
         <div class="row">
             <div class="col-8">
                 <div class="my-4 bg-secondary course-image">
-                    @if ($detailsCourse->image_path)
-                    <img class="course-img" src="{{ $detailsCourse->image_path }}" alt="course_image">
+                    @if ($course->image_path)
+                    <img class="course-img" src="{{ $course->image_path }}" alt="course_image">
                     @else
                     <img class="course-img" src="{{ asset('images/default_course_img.png') }}" alt="default_course_image">
                     @endif
@@ -30,7 +30,7 @@
                         <div class="container tab-pane fade show active px-2" id="lessons" role="tabpanel" aria-labelledby="lessons-tab">
                             <div class="row py-4 ml-0">
                                 <div class="col-8 pl-0">
-                                    <form action="{{ route('course.details.search-lessons', $detailsCourse->id) }}" method="get">
+                                    <form action="{{ route('lesson.search', $course->id) }}" method="get">
                                         <div class="d-flex flex-row">
                                             <div class="form-search-input">
                                                 <input type="text" class="search-input" name="keyword" placeholder="Search..." @if (isset($keyword)) value="{{ $keyword }}" @endif>
@@ -43,7 +43,19 @@
                                     </form>
                                 </div>
                                 <div class="col-4">
-                                    <button class="join-course-button">Join course</button>
+                                    @if (Auth::check() && $course->check_student_in_course == config('variables.studentInCourse'))
+                                    <form action="{{ route('leave.course', $course->id) }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="leave-course-button">Leave course</button>
+                                    </form>
+                                    @elseif (Auth::check())
+                                    <form action="{{ route('join.course', $course->id) }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="join-course-button">Join course</button>
+                                    </form>
+                                    @else
+                                    <button data-target="#loginModal" data-toggle="modal" class="join-course-button">Join course</button>
+                                    @endif
                                 </div>
                             </div>
                             @foreach ($lessons as $key => $lesson)
@@ -52,7 +64,13 @@
                                     {{ ++$key }}. {{ $lesson->name }}
                                 </div>
                                 <div class="col-3 d-flex justify-content-end align-items-center pr-2">
-                                    <a href="#" class="learn-lesson-button">Learn</a>
+                                    @if($course->check_student_in_course == config('variables.studentInCourse'))
+                                        @if ($lesson->check_lesson_learned == config('variables.learnedLesson'))
+                                            <a href="#" class="learned-lesson-button">Learned</a>
+                                        @else
+                                            <a href="#" class="learn-lesson-button">Learn</a>
+                                        @endif
+                                    @endif
                                 </div>
                             </div>
                             @endforeach
@@ -95,21 +113,25 @@
                         </div>
                         <div class="container tab-pane fade px-2" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                             <div class="pt-3 pb-2 px-2 reviews-title">
-                                05 Reviews
+                                {{ $course->number_of_review }} Reviews
                             </div>
                             <div class="py-3">
                                 <div class="row">
                                     <div class="col-4">
                                         <div class="d-flex flex-column justify-content-center align-items-center rating-5star pt-2 pb-4">
-                                            <div class="rating-5star-number">5</div>
+                                            <div class="rating-5star-number">{{ round($course->average_of_rate, 1) }}</div>
                                             <div class="star mt-1">
-                                                <i class="fas fa-star">&nbsp;</i>
-                                                <i class="fas fa-star">&nbsp;</i>
-                                                <i class="fas fa-star">&nbsp;</i>
-                                                <i class="fas fa-star">&nbsp;</i>
-                                                <i class="fas fa-star">&nbsp;</i>
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= $course->average_of_rate)
+                                                    <i class="fas fa-star">&nbsp;</i>
+                                                    @elseif (($i - 0.5) <= $course->average_of_rate)
+                                                    <i class="fas fa-star-half-alt">&nbsp;</i>
+                                                    @else
+                                                    <i class="far fa-star">&nbsp;</i>
+                                                    @endif
+                                                @endfor
                                             </div>
-                                            <div class="rating-5star-times">2 Ratings</div>
+                                            <div class="rating-5star-times">{{ $course->total_of_rate }} Ratings</div>
                                         </div>
                                     </div>
                                     <div class="col-8">
@@ -117,37 +139,42 @@
                                             <div class="d-flex justify-content-between align-items-center py-1">
                                                 <div class="number-rating-star">5 stars</div>
                                                 <div class="progress w-75 progress-review">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <input type="text" hidden id="five-star" value="{{ $course->getPercentOfNumberOfRate(config('variables.rate.five_star')) }}%">
+                                                    <div id="five-star-progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="number-stars">2</div>
+                                                <div class="number-stars">{{ $course->getNumberOfRate(config('variables.rate.five_star'))}}</div>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center py-1">
                                                 <div class="number-rating-star">4 stars</div>
                                                 <div class="progress w-75 progress-review">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <input type="text" hidden id="four-star" value="{{ $course->getPercentOfNumberOfRate(config('variables.rate.four_star')) }}%">
+                                                    <div id="four-star-progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="number-stars">2</div>
+                                                <div class="number-stars">{{ $course->getNumberOfRate(config('variables.rate.four_star'))}}</div>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center py-1">
                                                 <div class="number-rating-star">3 stars</div>
                                                 <div class="progress w-75 progress-review">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <input type="text" hidden id="three-star" value="{{ $course->getPercentOfNumberOfRate(config('variables.rate.three_star')) }}%">
+                                                    <div id="three-star-progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="number-stars">2</div>
+                                                <div class="number-stars">{{ $course->getNumberOfRate(config('variables.rate.three_star'))}}</div>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center py-1">
                                                 <div class="number-rating-star">2 stars</div>
                                                 <div class="progress w-75 progress-review">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <input type="text" hidden id="two-star" value="{{ $course->getPercentOfNumberOfRate(config('variables.rate.two_star')) }}%">
+                                                    <div id="two-star-progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="number-stars">2</div>
+                                                <div class="number-stars">{{ $course->getNumberOfRate(config('variables.rate.two_star'))}}</div>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center py-1">
-                                                <div class="number-rating-star">1 stars</div>
+                                                <div class="number-rating-star">1 &nbsp;stars</div>
                                                 <div class="progress w-75 progress-review">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <input type="text" hidden id="one-star" value="{{ $course->getPercentOfNumberOfRate(config('variables.rate.one_star')) }}%">
+                                                    <div id="one-star-progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="number-stars">2</div>
+                                                <div class="number-stars">{{ $course->getNumberOfRate(config('variables.rate.one_star'))}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -157,46 +184,81 @@
                                 <div class="title mt-4 show-all-review" href="">
                                     Show all reviews <i class="fas fa-caret-down"></i>
                                 </div>
+                                <?php $indexReviewOfCurrentUser = 0?>
+                                @foreach ($course->reviews as $review)
                                 <div class="review pt-4 pb-3">
                                     <div class="user d-flex flex-row">
                                         <div class="user-avatar">
-                                            <img src="{{ asset('images/user_avatar.png') }}" alt="" class="user-img">
+                                            @if ($review->user->avatar)
+                                            <img src="{{ $review->user->avatar }}" alt="user_image" class="user-img">
+                                            @else
+                                            <img src="{{ asset('images/user_avatar.png') }}" alt="default_user_image" class="user-img">
+                                            @endif
                                         </div>
-                                        <div class="user-name ml-3">Khanh</div>
+                                        <div class="user-name ml-3">{{ $review->user->name }}</div>
                                         <div class="user-rate ml-4">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= $review->rate)
+                                                <i class="fas fa-star">&nbsp;</i>
+                                                @elseif (($i - 0.5) <= $review->rate)
+                                                <i class="fas fa-star-half-alt">&nbsp;</i>
+                                                @else
+                                                <i class="far fa-star">&nbsp;</i>
+                                                @endif
+                                            @endfor
                                         </div>
                                         <div class="user-review-time ml-5">
-                                            August 4, 2020 at 1:30 pm
+                                            {{ $review->updated_at }}
                                         </div>
                                     </div>
                                     <div class="review-content text mt-3">
-                                        Vivamus volutpat eros pulvinar velit laoreet, sit amet egestas erat dignissim. Sed quis rutrum tellus, sit amet viverra felis. Cras sagittis sem sit amet urna feugiat rutrum. Nam nulla ipsum, venenatis malesuada felis quis, ultricies convallis neque. Pellentesque tristique
+                                        {{ $review->content }}
+                                    </div>
+                                    <div class="d-flex justify-content-end align-items-center">
+                                        @if (Auth::check())
+                                            @if (Auth::user()->id == $review->user->id)
+                                                <button type="button" id="{{ $indexReviewOfCurrentUser }}" class="edit-review-button" data-toggle="modal" data-target="#editReviewModal{{ $review->id }}"><i class="fas fa-pen"></i></button>
+                                                @include ('review.edit_review_modal', $review)
+                                                <button type="button" class="ml-2 delete-review-button" data-toggle="modal" data-target="#deleleReviewModal{{ $review->id }}"><i class="fas fa-trash"></i></button>
+                                                @include ('review.delete_review_modal', $review)
+                                                <?php $indexReviewOfCurrentUser ++?>
+                                            @endif
+                                        @endif
                                     </div>
                                 </div>
+                                @endforeach
                             </div>
                             <div class="add-review-container">
                                 <div class="add-review-title mt-4">Leave a Review</div>
-                                <div class="add-review-message mt-3">Message</div>
-                                <textarea name="review_message" id="" cols="30" rows="5" class="form-control mt-2"></textarea>
-                                <div class="vote-star-review d-flex align-items-center mt-3">
-                                    <div class="vote">Vote</div>
-                                    <div class="rating ml-3">
-                                        <input type="radio" name="rate" id="star1" value="1"><label for="star1">1 stars</label>
-                                        <input type="radio" name="rate" id="star2" value="2"><label for="star2">2 stars</label>
-                                        <input type="radio" name="rate" id="star3" value="3"><label for="star3">3 stars</label>
-                                        <input type="radio" name="rate" id="star4" value="4"><label for="star4">4 stars</label>
-                                        <input type="radio" name="rate" id="star5" value="5"><label for="star5">5 stars</label>
+                                <form action="{{ route('review.course.store') }}" method="POST">
+                                    <div class="add-review-message mt-3">Message</div>
+                                    @csrf
+                                    <input type="hidden" name="course_id" value="{{ $course->id }}">
+                                    <textarea name="review_message" id="" cols="30" rows="5" class="form-control mt-2"></textarea>
+                                    <div class="vote-star-review d-flex align-items-center mt-3">
+                                        <div class="vote">Vote</div>
+                                        <div class="rating ml-3">
+                                            <input class="rate" type="radio" name="rate" id="star-five" value="{{ config('variables.rate.five_star') }}">
+                                            <label for="star-five" class="mb-0 mt-1">5 stars</label>
+                                            <input class="rate" type="radio" name="rate" id="star-four" value="{{ config('variables.rate.four_star') }}">
+                                            <label for="star-four" class="mb-0 mt-1">4 stars</label>
+                                            <input class="rate" type="radio" name="rate" id="star-three" value="{{ config('variables.rate.three_star') }}">
+                                            <label for="star-three" class="mb-0 mt-1">3 stars</label>
+                                            <input class="rate" type="radio" name="rate" id="star-two" value="{{ config('variables.rate.two_star') }}">
+                                            <label for="star-two" class="mb-0 mt-1">2 stars</label>
+                                            <input class="rate" type="radio" name="rate" id="star-one" value="{{ config('variables.rate.one_star') }}">
+                                            <label for="star-one" class="mb-0 mt-1">1 stars</label>
+                                        </div>
+                                        <div class="stars-text ml-3">(stars)</div>
                                     </div>
-                                    <div class="stars-text ml-3">(stars)</div>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="send-review">Send</button>
-                                </div>
+                                    <div class="d-flex justify-content-end">
+                                    @if (Auth::check())
+                                        <button type="submit" class="send-review">Send</button>
+                                    @else
+                                        <a data-target="#loginModal" data-toggle="modal" class="send-review btn">Send</a>
+                                    @endif
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -208,7 +270,7 @@
                         Descriptions course
                     </div>
                     <div class="description-content mt-3">
-                        {{ $detailsCourse->description }}
+                        {{ $course->description }}
                     </div>
                 </div>
                 <div class="course-statistic p-3">
@@ -217,7 +279,7 @@
                             <img src="{{ asset('images/learner_icon.png') }}" alt="learner_icon" class="icon-img"> Learners
                         </div>
                         <div class="statistic-data">
-                            : {{ $detailsCourse->number_of_student }}
+                            : {{ $course->number_of_student }}
                         </div>
                     </div>
                     <div class="py-4 d-flex statistic">
@@ -225,7 +287,7 @@
                             <img src="{{ asset('images/lesson_icon.png') }}" alt="lesson_icon" class="icon-img"> Lessons
                         </div>
                         <div class="statistic-data">
-                            : {{ $detailsCourse->number_of_lesson }} lessons
+                            : {{ $course->number_of_lesson }} lessons
                         </div>
                     </div>
                     <div class="py-4 d-flex statistic">
@@ -233,50 +295,51 @@
                             <img src="{{ asset('images/time_icon.png') }}" alt="time_icon" class="icon-img"> Time
                         </div>
                         <div class="statistic-data">
-                            : @if ($detailsCourse->learn_time < 60) {{ $detailsCourse->learn_time }} min @else {{ (int)($detailsCourse->learn_time / 60) }} h {{ $detailsCourse->learn_time % 60 }} min @endif </div>
+                            : @if ($course->learn_time < 60) {{ $course->learn_time }} min @else {{ (int)($course->learn_time / 60) }} h {{ $course->learn_time % 60 }} min @endif </div>
+                    </div>
+                    <div class="py-4 d-flex statistic">
+                        <div class="statistic-category">
+                            <img src="{{ asset('images/tag_icon.png') }}" alt="tag_icon" class="icon-img"> Tags
                         </div>
-                        <div class="py-4 d-flex statistic">
-                            <div class="statistic-category">
-                                <img src="{{ asset('images/tag_icon.png') }}" alt="tag_icon" class="icon-img"> Tags
-                            </div>
-                            <div class="statistic-data d-flex">
-                                :
-                                <form action="{{ route('courses.search') }}" method="get">
-                                    @foreach ($detailsCourse->tags as $tag)
-                                    <input type="submit" name="tag" hidden id="tagSearch{{ $tag->id }}" value="{{ $tag->id }}">
-                                    <label for="tagSearch{{ $tag->id }}" class="statistic-data tag m-0 d-block">&nbsp;#{{ $tag->name }}</label>
-                                    @endforeach
-                                </form>
-                            </div>
-                        </div>
-                        <div class="py-4 d-flex statistic">
-                            <div class="statistic-category">
-                                <img src="{{ asset('images/price_icon.png') }}" alt="price_icon" class="icon-img"> Price
-                            </div>
-                            <div class="statistic-data">
-                                : @if ($detailsCourse->price > 0)
-                                {{ $detailsCourse->learn_time }} $
+                        <div class="statistic-data tags-form">
+                            <form action="{{ route('courses.search') }}" method="get">
+                                @foreach ($course->tags as $tag)
+                                <input type="submit" name="tag" hidden id="tagSearch{{ $tag->id }}" value="{{ $tag->id }}">
+                                @if ($loop->first)
+                                <label for="tagSearch{{ $tag->id }}" class="tag m-0">:&nbsp;#{{ $tag->name }},</label>
+                                @elseif ($loop->last)
+                                <label for="tagSearch{{ $tag->id }}" class="tag m-0">&nbsp;#{{ $tag->name }}</label>
                                 @else
-                                free
+                                <label for="tagSearch{{ $tag->id }}" class="tag m-0">&nbsp;#{{ $tag->name }},</label>
                                 @endif
-                            </div>
+                                @endforeach
+                            </form>
                         </div>
                     </div>
-                    <div class="other-courses mt-4 mb-5">
-                        <div class="other-course-title py-3">Other Courses</div>
-                        <div class="other-courses-list">
-                            @foreach ($detailsCourse->other_courses as $key => $otherCourse )
-                            <a href="{{ route('course.details', $otherCourse->id) }}" class="other-courses-element p-3 d-block">
-                                {{ ++$key }}. {{ $otherCourse->name }}
-                            </a>
-                            @endforeach
-                            <div class="d-flex align-items-center justify-content-center py-4">
-                                <a href="{{ route('courses') }}" class="view-all-course-button">View all ours courses</a>
-                            </div>
+                    <div class="py-4 d-flex statistic">
+                        <div class="statistic-category">
+                            <img src="{{ asset('images/price_icon.png') }}" alt="price_icon" class="icon-img"> Price
+                        </div>
+                        <div class="statistic-data">
+                            : {{ ($course->price > 0) ? $course->price.' $'  : 'Free' }}
+                        </div>
+                    </div>
+                </div>
+                <div class="other-courses mt-4 mb-5">
+                    <div class="other-course-title py-3">Other Courses</div>
+                    <div class="other-courses-list">
+                        @foreach ($course->other_courses as $key => $otherCourse )
+                        <a href="{{ route('course.details', $otherCourse->id) }}" class="other-courses-element p-3 d-block">
+                            {{ ++$key }}. {{ $otherCourse->name }}
+                        </a>
+                        @endforeach
+                        <div class="d-flex align-items-center justify-content-center py-4">
+                            <a href="{{ route('courses') }}" class="view-all-course-button">View all ours courses</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
 @endsection

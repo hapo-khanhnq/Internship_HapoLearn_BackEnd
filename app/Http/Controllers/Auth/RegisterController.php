@@ -46,7 +46,11 @@ class RegisterController extends Controller
     {
         $user = $this->create($request->all());
         $this->guard()->login($user);
-        return $this->registered($request, $user) ?: redirect($this->redirectPath());
+        $url = redirect()->back();
+        if ($url->getTargetUrl() == redirect('/')->getTargetUrl(). '/') {
+            $url = redirect('/home');
+        }
+        return $url;
     }
 
     /**

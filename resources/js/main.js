@@ -76,9 +76,24 @@ $(function () {
   $('.filter-select2-menu').select2();
 
   $("#clearFilter").click(function(){
-    $("input:radio").val("latest").change();
+    //$("input:radio").val("latest").change();
     $(".search-input").val("").change();
     $("#latest").prop("checked", true);
     $("select").val("").change();
+  });
+
+  $('#five-star-progress-bar').width(document.getElementById("five-star").value);
+  $('#four-star-progress-bar').width(document.getElementById("four-star").value);
+  $('#three-star-progress-bar').width(document.getElementById("three-star").value);
+  $('#two-star-progress-bar').width(document.getElementById("two-star").value);
+  $('#one-star-progress-bar').width(document.getElementById("one-star").value);
+
+  $('.edit-review-button').click(function(){
+    var key = $(this).attr('id');
+    var rate = document.getElementsByClassName("rating_value")[key].value;
+    var id = document.getElementsByClassName("rating_value")[key].id;
+    if(rate !=0) {
+      $("#" + id + "-" + rate).attr("checked", "true");
+    }
   });
 });

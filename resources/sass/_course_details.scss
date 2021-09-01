@@ -135,7 +135,8 @@
     }
   }
 
-  .join-course-button {
+  .join-course-button,
+  .leave-course-button {
     height: 40px;
     padding-left: 30px;
     padding-right: 30px;
@@ -146,14 +147,27 @@
     line-height: 22px;
     letter-spacing: -0.05em;
     color: white;
-    background: var(--header_hoverBackgroundATag_color);
-    box-shadow: var(--main_courses_card_button_box_shadow);
     border-radius: 22px;
     border: none;
 
     &:hover {
       color: var(--header_aTag_color);
     }
+  }
+
+  .join-course-button {
+    background: var(--header_hoverBackgroundATag_color);
+    box-shadow: var(--main_courses_card_button_box_shadow);
+    text-decoration: none;
+  }
+
+  #login {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  .leave-course-button {
+    background: red;
   }
 
   .lesson-of-course {
@@ -183,6 +197,28 @@
       color: white;
       background: var(--header_hoverBackgroundATag_color);
       box-shadow: var(--main_courses_card_button_box_shadow);
+      border-radius: 22px;
+      border: none;
+      text-decoration: none;
+      text-align: center;
+
+      &:hover {
+        color: var(--header_aTag_color);
+      }
+    }
+    
+    .learned-lesson-button {
+      height: 30px;
+      padding: 4px 24px 8px 24px;
+      font-family: var(--card_body_fonts_family);
+      font-style: normal;
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 18px;
+      letter-spacing: -0.05em;
+      color: white;
+      background: red;
+      box-shadow: red;
       border-radius: 22px;
       border: none;
       text-decoration: none;
@@ -319,7 +355,8 @@
       -webkit-text-stroke-width: 0.5px;
     }
 
-    .fa-star {
+    .fa-star,
+    .fa-star-half-alt {
       font-size: 25px;
       line-height: 29px;
       color: var(--rating_star_color);
@@ -383,6 +420,46 @@
     margin-right: -0.5rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+  }
+
+  .edit-review-button {
+    height: 40px;
+    padding-left: 24px;
+    padding-right: 24px;
+    font-family: var(--card_body_fonts_family);
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: -0.05em;
+    color: white;
+    background: var(--header_hoverBackgroundATag_color);
+    box-shadow: var(--main_courses_card_button_box_shadow);
+    border-radius: 22px;
+    border: none;
+
+    &:hover {
+      color: var(--header_aTag_color);
+    }
+  }
+
+  .delete-review-button {
+    height: 40px;
+    padding-left: 24px;
+    padding-right: 24px;
+    font-family: var(--card_body_fonts_family);
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: -0.05em;
+    color: white;
+    background: red;
+    box-shadow: red;
+    border-radius: 22px;
+    border: none;
+
+    &:hover {
+      color: var(--header_aTag_color);
+    }
   }
 
   .user-avatar {
@@ -489,7 +566,8 @@
     overflow: hidden;
     white-space: nowrap;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 23px;
+    line-height: 21px;
     color: #D8D8D8;
   }
   
@@ -513,7 +591,7 @@
   .rating > label:hover ~ input:checked ~ label {
       color: #C59B08;
   }
-  
+
   .send-review {
     height: 30px;
     padding-left: 24px;
@@ -592,9 +670,15 @@
     .statistic-data {
       font-weight: bold;
       margin-left: 15px;
+      width: 58%;
     }
 
     .tag {
+      font-family: var(--card_body_fonts_family);
+      font-size: 22px;
+      line-height: 31px;
+      letter-spacing: -0.02em;
+      font-weight: bold;
       color: var(--course_statistic_tag_color);
       cursor: pointer;
     }
@@ -603,6 +687,10 @@
       width: 35px;
       height: 35px;
       margin-right: 5px;
+    }
+    
+    .tags-form {
+      width: 58%;
     }
   }
 
@@ -658,5 +746,9 @@
     &:hover {
       color: var(--header_aTag_color);
     }
+  }
+
+  .modal-dialog {
+    max-width: 60%;
   }
 }
