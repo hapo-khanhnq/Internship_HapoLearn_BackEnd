@@ -18,7 +18,7 @@
                     {{ $course->description }}
                 </div>
                 <div class="d-flex justify-content-end">
-                    <a href="#" class="show-course-details-button">More</a>
+                    <a href="{{ route('course.details', $course->id) }}" class="show-course-details-button">More</a>
                 </div>
             </div>
         </div>

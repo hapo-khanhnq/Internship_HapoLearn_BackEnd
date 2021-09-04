@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
 {
@@ -30,7 +31,7 @@ class Course extends Model
         return $this->belongsToMany(User::class, 'courses_users', 'course_id', 'user_id');
     }
 
-    public function teacher()
+    public function teachers()
     {
         return $this->users()->where('role', User::ROLE['teacher']);
     }
@@ -65,9 +66,50 @@ class Course extends Model
         return $this->reviews()->count();
     }
 
+    public function getTotalOfRateAttribute()
+    {
+        return $this->reviews()->whereNotNull('rate')->count();
+    }
+
     public function getAverageOfRateAttribute()
     {
-        return $this->reviews()->avg('rate');
+        return $this->reviews()->whereNotNull('rate')->avg('rate');
+    }
+
+    public function getOtherCoursesAttribute()
+    {
+        return $this->withCount('students')->where('id', '<>', $this->id)->orderByDesc('students_count')->take(config('variables.number_of_other_courses'))->get();
+    }
+
+    public function getCheckStudentInCourseAttribute()
+    {
+        $checkStudent = [];
+        if (Auth::user()) {
+            $checkStudent = $this->users()->wherePivot('user_id', Auth::user()->id)->count();
+        }
+
+        if ($checkStudent == config('variables.student_in_course')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getNumberOfRate($rate)
+    {
+        return $this->reviews()->where('rate', $rate)->count();
+    }
+
+    public function getPercentOfNumberOfRate($rate)
+    {
+        if ($this->reviews()->whereNotNull('rate')->count() != 0) {
+            $totalRate = $this->reviews()->whereNotNull('rate')->count();
+            $numberOfRate = $this->getNumberOfRate($rate);
+            $percent = floor($numberOfRate / $totalRate * 100);
+        } else {
+            $percent = 0;
+        }
+        return $percent;
     }
 
     public function scopeFilter($query, $data)
@@ -84,7 +126,7 @@ class Course extends Model
         }
 
         if (isset($data['number_of_learner'])) {
-            if ($data['number_of_learner'] == config('variables.orderBy.asc')) {
+            if ($data['number_of_learner'] == config('variables.order_by.asc')) {
                 $query->withCount('students')->orderBy('students_count');
             } else {
                 $query->withCount('students')->orderByDesc('students_count');
@@ -92,7 +134,7 @@ class Course extends Model
         }
 
         if (isset($data['learn_time'])) {
-            if ($data['learn_time'] == config('variables.orderBy.asc')) {
+            if ($data['learn_time'] == config('variables.order_by.asc')) {
                 $query->withSum('lessons', 'learn_time')->orderBy('lessons_sum_learn_time');
             } else {
                 $query->withSum('lessons', 'learn_time')->orderByDesc('lessons_sum_learn_time');
@@ -100,7 +142,7 @@ class Course extends Model
         }
 
         if (isset($data['number_of_lesson'])) {
-            if ($data['number_of_lesson'] == config('variables.orderBy.asc')) {
+            if ($data['number_of_lesson'] == config('variables.order_by.asc')) {
                 $query->withCount('lessons')->orderBy('lessons_count');
             } else {
                 $query->withCount('lessons')->orderByDesc('lessons_count');
@@ -114,7 +156,7 @@ class Course extends Model
         }
 
         if (isset($data['rating'])) {
-            if ($data['rating'] == config('variables.orderBy.asc')) {
+            if ($data['rating'] == config('variables.order_by.asc')) {
                 $query->withAvg('reviews', 'rate')->orderBy('reviews_avg_rate');
             } else {
                 $query->withAvg('reviews', 'rate')->orderByDesc('reviews_avg_rate');
@@ -122,7 +164,7 @@ class Course extends Model
         }
 
         if (isset($data['filter_status'])) {
-            if ($data['filter_status'] == config('variables.filterStatus.oldest')) {
+            if ($data['filter_status'] == config('variables.filter_status.oldest')) {
                 $query->orderBy('id');
             } else {
                 $query->orderByDesc('id');

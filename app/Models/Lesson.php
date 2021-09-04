@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Lesson extends Model
 {
@@ -22,10 +23,10 @@ class Lesson extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'lessons_users', 'lesson_id', 'user_id');
+        return $this->belongsToMany(User::class, 'lessons_users', 'lesson_id', 'user_id')->withPivot('learned');
     }
 
-    public function mentor()
+    public function teachers()
     {
         return $this->users()->where('role', User::ROLE['teacher']);
     }
@@ -38,5 +39,30 @@ class Lesson extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class, 'location_id')->where('locationType', Review::LOCATION_TYPE['lesson']);
+    }
+
+    public function getCheckLessonLearnedAttribute()
+    {
+        $checkLesson = [];
+        if (Auth::user()) {
+            $checkLesson = $this->students()->wherePivot('user_id', Auth::user()->id)->where('learned', config('variables.learned_lesson'))->count();
+        }
+        
+        if ($checkLesson == config('variables.learned_lesson')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function scopeSearch($query, $data, $courseId)
+    {
+        if (isset($data['keyword']) && isset($courseId)) {
+            $query->whereHas('course', function ($subquery) use ($courseId) {
+                $subquery->where('course_id', $courseId);
+            })->where('name', 'like', '%' . $data['keyword'] . '%');
+        }
+
+        return $query;
     }
 }

@@ -12,6 +12,6 @@ class CoursesUser extends Model
     use SoftDeletes;
 
     protected $filable = [
-        'course_id', 'user_id'
+        'course_id', 'user_id', 'created_at'
     ];
 }
