@@ -45,9 +45,14 @@ class Lesson extends Model
     {
         $checkLesson = [];
         if (Auth::user()) {
-            $checkLesson = $this->students()->wherePivot('user_id', Auth::user()->id)->where('learned', config('variables.learnedLesson'))->get();
+            $checkLesson = $this->students()->wherePivot('user_id', Auth::user()->id)->where('learned', config('variables.learned_lesson'))->count();
         }
-        return count($checkLesson);
+        
+        if ($checkLesson == config('variables.learned_lesson')) {
+            return true;
+        }
+
+        return false;
     }
 
     public function scopeSearch($query, $data, $courseId)

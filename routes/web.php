@@ -18,19 +18,15 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('user.home');
-})->name('home.notLogin');
-
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/courses', [CourseController::class, 'index'])->name('courses');
 Route::get('/search-course', [CourseController::class, 'searchCourses'])->name('courses.search');
 Route::get('/course-details/{id}', [CourseController::class, 'details'])->name('course.details');
 Route::get('/search-lessons-of-course/{id}', [LessonController::class, 'search'])->name('lesson.search');
-Route::post('take-course/{id}', [CourseController::class, 'joinCourse'])->name('join.course');
-Route::post('leave-course/{id}', [CourseController::class, 'leaveCourse'])->name('leave.course');
+Route::post('take-course', [CourseController::class, 'join'])->name('course.join');
+Route::post('leave-course', [CourseController::class, 'leave'])->name('course.leave');
 Route::post('course/store-review', [ReviewController::class, 'storeCourseReview'])->name('review.course.store');
-Route::post('course/update-review/{id}', [ReviewController::class, 'updateReview'])->name('review.update');
-Route::delete('course/delete-review/{id}', [ReviewController::class, 'destroyReview'])->name('review.destroy');
+Route::post('course/update-review', [ReviewController::class, 'update'])->name('review.update');
+Route::delete('course/delete-review', [ReviewController::class, 'destroy'])->name('review.destroy');

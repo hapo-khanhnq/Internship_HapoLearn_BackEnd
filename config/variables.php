@@ -2,25 +2,25 @@
 return [
     'pagination' => '14',
 
-    'orderBy' => [
+    'order_by' => [
         'asc' => 'asc',
         'desc' => 'desc',
         'null' => ''
     ],
 
-    'filterStatus' => [
+    'filter_status' => [
         'latest' => 'latest',
         'oldest' => 'oldest',
         'null' => ''
     ],
 
-    'lesson-pagination' => '20',
+    'lesson_pagination' => '20',
 
-    'numberOfOtherCourses' => '5',
+    'number_of_other_courses' => '5',
 
-    'studentInCourse' => '1',
+    'student_in_course' => '1',
 
-    'learnedLesson' => '1',
+    'learned_lesson' => '1',
 
     'rate' => [
         'five_star' => '5',

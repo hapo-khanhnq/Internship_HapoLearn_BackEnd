@@ -5,7 +5,8 @@
  */
 // Import
 import "slick-carousel/slick/slick.min.js";
-import "select2/dist/js/select2.min.js"
+import "select2/dist/js/select2.min.js";
+import "jquery-validation/dist/jquery.validate";
 
 // Require
 require('./bootstrap');

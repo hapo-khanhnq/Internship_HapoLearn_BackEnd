@@ -91,9 +91,28 @@ $(function () {
   $('.edit-review-button').click(function(){
     var key = $(this).attr('id');
     var rate = document.getElementsByClassName("rating_value")[key].value;
-    var id = document.getElementsByClassName("rating_value")[key].id;
-    if(rate !=0) {
-      $("#" + id + "-" + rate).attr("checked", "true");
+    var idRate = document.getElementsByClassName("rating_value")[key].id;
+    var idFormEditReview = document.getElementsByClassName("form-edit-review")[key].id;
+    if(rate != 0) {
+      $("#" + idRate + "-" + rate).attr("checked", "true");
     }
+
+    $("#" + idFormEditReview).validate({
+      rules: {
+        edit_review_message: "required"
+      },
+
+      messages: {
+        edit_review_message: "The review message field is required."
+      },
+
+      submitHandler: function(form) {
+        form.submit();
+      }
+    });
   });
+
+  if ($("#reviewMessage").hasClass("is-invalid")) {
+    $("#reviews-tab").trigger("click");
+  }
 });

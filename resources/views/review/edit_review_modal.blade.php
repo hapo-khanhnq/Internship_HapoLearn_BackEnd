@@ -9,15 +9,16 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('review.update', $review->id) }}" method="POST">
+                <form action="{{ route('review.update') }}" method="POST" id="{{ $review->id }}FormEditReview" class="form-edit-review">
                     <div class="add-review-message mt-3">Message</div>
                     @csrf
+                    <input type="hidden" name="id" value="{{ $review->id }}">
                     <input type="hidden" name="rating_value" class="rating_value" id="{{ $review->id }}-edit-star" value="{{ isset($review->rate) ? $review->rate : 0 }}">
-                    <textarea name="review_message" id="" cols="30" rows="5" class="form-control mt-2">{{ $review->content }}</textarea>
+                    <textarea name="edit_review_message" id="{{ $review->id }}reviewMessage" cols="30" rows="5" class="review-message form-control mt-2">{{ $review->content }}</textarea>
                     <div class="vote-star-review d-flex align-items-center mt-3">
                         <div class="vote">Vote</div>
                         <div class="rating ml-3">
-                            <input class="rate" type="radio" name="rate" id="{{ $review->id }}-edit-star-5" value="{{ config('variables.rate.five_star') }}">
+                            <input class="rate" type="radio" name="rate" id="{{ $review->id }}-edit-star-5" value="{{ config('variables.rate.fiv_star') }}">
                             <label for="{{ $review->id }}-edit-star-5" class="mb-0 mt-1">5 stars</label>
                             <input class="rate" type="radio" name="rate" id="{{ $review->id }}-edit-star-4" value="{{ config('variables.rate.four_star') }}">
                             <label for="{{ $review->id }}-edit-star-4" class="mb-0 mt-1">4 stars</label>

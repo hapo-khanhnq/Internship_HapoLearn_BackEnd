@@ -664,13 +664,13 @@
     }
 
     .statistic-category {
-      width: 42%;
+      width: 45%;
     }
 
     .statistic-data {
       font-weight: bold;
       margin-left: 15px;
-      width: 58%;
+      width: 55%;
     }
 
     .tag {
@@ -690,7 +690,7 @@
     }
     
     .tags-form {
-      width: 58%;
+      width: 55%;
     }
   }
 
@@ -750,5 +750,14 @@
 
   .modal-dialog {
     max-width: 60%;
+  }
+
+  .form-edit-review {
+    .error {
+      margin-top: 5px;
+      font-size: 80%;
+      color: #e3342f;
+      font-weight: bolder;
+    }
   }
 }

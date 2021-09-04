@@ -78,16 +78,21 @@ class Course extends Model
 
     public function getOtherCoursesAttribute()
     {
-        return $this->withCount('students')->where('id', '<>', $this->id)->orderByDesc('students_count')->take(config('variables.numberOfOtherCourses'))->get();
+        return $this->withCount('students')->where('id', '<>', $this->id)->orderByDesc('students_count')->take(config('variables.number_of_other_courses'))->get();
     }
 
     public function getCheckStudentInCourseAttribute()
     {
         $checkStudent = [];
         if (Auth::user()) {
-            $checkStudent = $this->users()->wherePivot('user_id', Auth::user()->id)->get();
+            $checkStudent = $this->users()->wherePivot('user_id', Auth::user()->id)->count();
         }
-        return count($checkStudent);
+
+        if ($checkStudent == config('variables.student_in_course')) {
+            return true;
+        }
+
+        return false;
     }
 
     public function getNumberOfRate($rate)
@@ -121,7 +126,7 @@ class Course extends Model
         }
 
         if (isset($data['number_of_learner'])) {
-            if ($data['number_of_learner'] == config('variables.orderBy.asc')) {
+            if ($data['number_of_learner'] == config('variables.order_by.asc')) {
                 $query->withCount('students')->orderBy('students_count');
             } else {
                 $query->withCount('students')->orderByDesc('students_count');
@@ -129,7 +134,7 @@ class Course extends Model
         }
 
         if (isset($data['learn_time'])) {
-            if ($data['learn_time'] == config('variables.orderBy.asc')) {
+            if ($data['learn_time'] == config('variables.order_by.asc')) {
                 $query->withSum('lessons', 'learn_time')->orderBy('lessons_sum_learn_time');
             } else {
                 $query->withSum('lessons', 'learn_time')->orderByDesc('lessons_sum_learn_time');
@@ -137,7 +142,7 @@ class Course extends Model
         }
 
         if (isset($data['number_of_lesson'])) {
-            if ($data['number_of_lesson'] == config('variables.orderBy.asc')) {
+            if ($data['number_of_lesson'] == config('variables.order_by.asc')) {
                 $query->withCount('lessons')->orderBy('lessons_count');
             } else {
                 $query->withCount('lessons')->orderByDesc('lessons_count');
@@ -151,7 +156,7 @@ class Course extends Model
         }
 
         if (isset($data['rating'])) {
-            if ($data['rating'] == config('variables.orderBy.asc')) {
+            if ($data['rating'] == config('variables.order_by.asc')) {
                 $query->withAvg('reviews', 'rate')->orderBy('reviews_avg_rate');
             } else {
                 $query->withAvg('reviews', 'rate')->orderByDesc('reviews_avg_rate');
@@ -159,7 +164,7 @@ class Course extends Model
         }
 
         if (isset($data['filter_status'])) {
-            if ($data['filter_status'] == config('variables.filterStatus.oldest')) {
+            if ($data['filter_status'] == config('variables.filter_status.oldest')) {
                 $query->orderBy('id');
             } else {
                 $query->orderByDesc('id');

@@ -43,14 +43,18 @@
                                     </form>
                                 </div>
                                 <div class="col-4">
-                                    @if (Auth::check() && $course->check_student_in_course == config('variables.studentInCourse'))
-                                    <form action="{{ route('leave.course', $course->id) }}" method="post">
+                                    @if (Auth::check() && $course->check_student_in_course)
+                                    <form action="{{ route('course.leave') }}" method="post">
                                         @csrf
+
+                                        <input type="hidden" name="course_id" value="{{ $course->id }}">
                                         <button type="submit" class="leave-course-button">Leave course</button>
                                     </form>
                                     @elseif (Auth::check())
-                                    <form action="{{ route('join.course', $course->id) }}" method="post">
+                                    <form action="{{ route('course.join') }}" method="post">
                                         @csrf
+
+                                        <input type="hidden" name="course_id" value="{{ $course->id }}">
                                         <button type="submit" class="join-course-button">Join course</button>
                                     </form>
                                     @else
@@ -64,8 +68,8 @@
                                     {{ ++$key }}. {{ $lesson->name }}
                                 </div>
                                 <div class="col-3 d-flex justify-content-end align-items-center pr-2">
-                                    @if($course->check_student_in_course == config('variables.studentInCourse'))
-                                        @if ($lesson->check_lesson_learned == config('variables.learnedLesson'))
+                                    @if($course->check_student_in_course)
+                                        @if ($lesson->check_lesson_learned)
                                             <a href="#" class="learned-lesson-button">Learned</a>
                                         @else
                                             <a href="#" class="learn-lesson-button">Learn</a>
@@ -234,7 +238,13 @@
                                     <div class="add-review-message mt-3">Message</div>
                                     @csrf
                                     <input type="hidden" name="course_id" value="{{ $course->id }}">
-                                    <textarea name="review_message" id="" cols="30" rows="5" class="form-control mt-2"></textarea>
+                                    <textarea name="review_message" id="reviewMessage" cols="30" rows="5" class="form-control mt-2 @error('review_message') is-invalid @enderror"></textarea>
+
+                                    @error('review_message')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                     <div class="vote-star-review d-flex align-items-center mt-3">
                                         <div class="vote">Vote</div>
                                         <div class="rating ml-3">

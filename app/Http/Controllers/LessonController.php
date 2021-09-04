@@ -17,7 +17,7 @@ class LessonController extends Controller
             $keyword = '';
         }
         $course = Course::find($id);
-        $lessons = Lesson::query()->search($data, $id)->paginate(config('variables.lesson-pagination'));
+        $lessons = Lesson::query()->search($data, $id)->paginate(config('variables.lesson_pagination'));
         $teachers = $course->teachers()->get();
         return view('course.course_details', compact('course', 'lessons', 'keyword', 'teachers'));
     }

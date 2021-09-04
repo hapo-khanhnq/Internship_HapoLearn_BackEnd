@@ -24,15 +24,16 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    protected function attemptLogin(Request $request)
+    {
+        return Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->filled('remember'));
+    }
+
     public function login(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $request->remember == true)) {
+        if ($this->attemptLogin($request)) {
             if (Auth::user()->role == User::ROLE['student']) {
-                $url = redirect()->back();
-                if ($url->getTargetUrl() == redirect('/')->getTargetUrl(). '/') {
-                    $url = redirect('/home');
-                }
-                return $url;
+                return redirect()->back();
             }
         }
     }

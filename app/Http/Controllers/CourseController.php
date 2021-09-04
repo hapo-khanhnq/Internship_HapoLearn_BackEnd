@@ -37,30 +37,34 @@ class CourseController extends Controller
     public function details($id)
     {
         $course = Course::find($id);
-        $lessons = $course->lessons()->paginate(config('variables.lesson-pagination'));
+        $lessons = $course->lessons()->paginate(config('variables.lesson_pagination'));
         $teachers = $course->teachers()->get();
         return view('course.course_details', compact('course', 'lessons', 'teachers'));
     }
 
-    public function joinCourse($id)
+    public function join(Request $request)
     {
-        $course = Course::findOrFail($id);
-        $course->students()->attach(Auth::user()->id, ['created_at' => Carbon::now()]);
+        $data = $request->all();
+        $courseID = $data['course_id'];
+        $course = Course::findOrFail($courseID);
+        $course->students()->attach(Auth::user()->id);
         $lessons = $course->lessons()->get();
         foreach ($lessons as $lesson) {
-            $lesson->students()->attach(Auth::user()->id, ['created_at' => Carbon::now()]);
+            $lesson->students()->attach(Auth::user()->id);
         }
-        return redirect()->route('course.details', $id);
+        return redirect()->route('course.details', $courseID);
     }
 
-    public function leaveCourse($id)
+    public function leave(Request $request)
     {
-        $course = Course::findOrFail($id);
+        $data = $request->all();
+        $courseID = $data['course_id'];
+        $course = Course::findOrFail($courseID);
         $course->users()->detach(Auth::user()->id);
         $lessons = $course->lessons()->get();
         foreach ($lessons as $lesson) {
-            $lesson->students()->detach(Auth::user()->id, ['created_at' => Carbon::now()]);
+            $lesson->students()->detach(Auth::user()->id);
         }
-        return redirect()->route('course.details', $id);
+        return redirect()->route('course.details', $courseID);
     }
 }

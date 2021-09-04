@@ -13,10 +13,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="delete-review-button" data-dismiss="modal">No</button>
-                <form action="{{ route('review.destroy', $review->id) }}" method="POST">
+                <form action="{{ route('review.destroy') }}" method="POST">
 
                     @csrf
                     @method('delete')
+                    <input type="hidden" name="id" value="{{ $review->id }}">
                     <button type="submit" class="ml-2 edit-review-button">Yes</button>
                 </form>
             </div>
