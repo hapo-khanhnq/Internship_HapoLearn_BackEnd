@@ -112,6 +112,25 @@ class Course extends Model
         return $percent;
     }
 
+    public function getLearningProgressAttribute()
+    {
+        $totalLesson = $this->lessons()->count();
+        $numberOfLearnedLesson = 0;
+        $lessons = $this->lessons()->get();
+        foreach ($lessons as $lesson) {
+            if ($lesson->getCheckLessonLearnedAttribute()) {
+                $numberOfLearnedLesson ++;
+            }
+        }
+
+        if ($totalLesson != 0) {
+            $progress = floor($numberOfLearnedLesson / $totalLesson * 100);
+        } else {
+            $progress = 0;
+        }
+        return $progress;
+    }
+
     public function scopeFilter($query, $data)
     {
         if (isset($data['keyword'])) {

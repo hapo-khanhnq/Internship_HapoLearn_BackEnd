@@ -23,6 +23,19 @@ class ReviewController extends Controller
         return redirect()->back();
     }
 
+    public function storeLessonReview(ReviewUserRequest $request)
+    {
+        $data = $request->all();
+        Review::create([
+            "content" => $data['review_message'],
+            'rate' => $request->rate,
+            'user_id' => Auth::user()->id,
+            'location_id' => $data['lesson_id'],
+            'locationType' => Review::LOCATION_TYPE['lesson'],
+        ]);
+        return redirect()->back();
+    }
+
     public function update(Request $request)
     {
         $data = $request->all();

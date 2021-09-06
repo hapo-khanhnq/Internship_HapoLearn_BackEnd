@@ -51,6 +51,10 @@ class CourseController extends Controller
         $lessons = $course->lessons()->get();
         foreach ($lessons as $lesson) {
             $lesson->students()->attach(Auth::user()->id);
+            $documents = $lesson->documents()->get();
+            foreach ($documents as $document) {
+                $document->students()->attach(Auth::user()->id);
+            }
         }
         return redirect()->route('course.details', $courseID);
     }
@@ -64,6 +68,10 @@ class CourseController extends Controller
         $lessons = $course->lessons()->get();
         foreach ($lessons as $lesson) {
             $lesson->students()->detach(Auth::user()->id);
+            $documents = $lesson->documents()->get();
+            foreach ($documents as $document) {
+                $document->students()->detach(Auth::user()->id);
+            }
         }
         return redirect()->route('course.details', $courseID);
     }

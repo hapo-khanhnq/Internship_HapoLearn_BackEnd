@@ -21,6 +21,8 @@ return [
     'student_in_course' => '1',
 
     'learned_lesson' => '1',
+    
+    'learning_lesson' => '2',
 
     'rate' => [
         'five_star' => '5',
@@ -34,4 +36,8 @@ return [
         'one_star' => '1',
         // 'half_star' => '0.5',
     ],
+
+    'learned_document' => '1',
+
+    'lesson_completed' => '100',
 ];

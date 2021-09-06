@@ -88,6 +88,10 @@ $(function () {
   $('#two-star-progress-bar').width(document.getElementById("two-star").value);
   $('#one-star-progress-bar').width(document.getElementById("one-star").value);
 
+  if(document.getElementById("course-learning-progress-value")) {
+    $('#course-learning-progress').width(document.getElementById("course-learning-progress-value").value);
+  }
+
   $('.edit-review-button').click(function(){
     var key = $(this).attr('id');
     var rate = document.getElementsByClassName("rating_value")[key].value;
@@ -115,4 +119,31 @@ $(function () {
   if ($("#reviewMessage").hasClass("is-invalid")) {
     $("#reviews-tab").trigger("click");
   }
+
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
+  $('.fa-circle').on('click', function (e) {
+    e.preventDefault();
+    var documentId = $(this).attr('data-doccumentId');
+    var url = $(this).attr('data-url');
+    var previewButton = $(this);
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: {
+        'id': documentId,
+      },
+      dataType: 'json', 
+      encode  : true,
+      success: function (response) {
+        console.log(response);
+        previewButton.parent().parent().find("#documentCheckLearned" + documentId.toString()).html('<i class="fas fa-check-circle mr-4 text-success"></i>');
+      }
+    });
+  });
 });

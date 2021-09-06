@@ -1,4 +1,4 @@
-.course-details-section {
+.lesson-details-section {
   .path-to-course-details {
     background: var(--path_to_course_details_background_color);
     padding-left: 75px;
@@ -170,22 +170,36 @@
     background: red;
   }
 
-  .lesson-of-course {
+  .program-of-lesson {
     border-top: 1px solid var(--lesson_of_course_border_color);
-    padding-left: 15px;
+    margin-left: -0.5rem;
     margin-right: -0.5rem;
 
-    .lesson-name {
+    .program-type {
       font-family: var(--card_body_fonts_family);
-      font-style: normal;
+      font-size: 14px;
+      line-height: 17px;
+      letter-spacing: -0.02em;
+      color: var(--program_type_color);
+    }
+
+    .iconfile-img {
+      width: 18px;
+      height: 25px;
+      margin-right: 14px;
+    }
+
+    .program-name {
+      font-family: var(--card_body_fonts_family);
       font-weight: bold;
       font-size: 18px;
       line-height: 22px;
       letter-spacing: -0.02em;
       color: var(--footer_container_background);
+      -webkit-text-stroke-width: 0.5px;
     }
 
-    .learn-lesson-button {
+    .learn-program-button {
       height: 30px;
       padding: 4px 24px 8px 24px;
       font-family: var(--card_body_fonts_family);
@@ -207,7 +221,7 @@
       }
     }
     
-    .learned-lesson-button {
+    .learned-program-button {
       height: 30px;
       padding: 4px 24px 8px 24px;
       font-family: var(--card_body_fonts_family);
@@ -217,7 +231,7 @@
       line-height: 18px;
       letter-spacing: -0.05em;
       color: white;
-      background: red;
+      background: lightgreen;
       box-shadow: var(--main_courses_card_button_box_shadow);
       border-radius: 22px;
       border: none;
@@ -229,9 +243,9 @@
       }
     }
 
-    .learning-lesson-button {
+    .download-program-button {
       height: 30px;
-      padding: 4px 24px 8px 24px;
+      padding: 4px 15px 8px 15px;
       font-family: var(--card_body_fonts_family);
       font-style: normal;
       font-weight: bold;
@@ -239,7 +253,7 @@
       line-height: 18px;
       letter-spacing: -0.05em;
       color: white;
-      background: lightskyblue;
+      background: orange;
       box-shadow: var(--main_courses_card_button_box_shadow);
       border-radius: 22px;
       border: none;
@@ -249,6 +263,10 @@
       &:hover {
         color: var(--header_aTag_color);
       }
+    }
+
+    .fa-circle {
+      cursor: pointer;
     }
   }
 
@@ -638,6 +656,7 @@
     background: white;
     border: 1px solid var(--course_description_border_color);
     box-sizing: border-box;
+    height: 439px;
   }
 
   .description-title {
@@ -685,13 +704,12 @@
     }
 
     .statistic-category {
-      width: 45%;
+      width: 42%;
     }
 
     .statistic-data {
       font-weight: bold;
       margin-left: 15px;
-      width: 55%;
     }
 
     .tag {
@@ -711,7 +729,7 @@
     }
     
     .tags-form {
-      width: 55%;
+      width: 58%;
     }
   }
 
@@ -771,14 +789,5 @@
 
   .modal-dialog {
     max-width: 60%;
-  }
-
-  .form-edit-review {
-    .error {
-      margin-top: 5px;
-      font-size: 80%;
-      color: #e3342f;
-      font-weight: bolder;
-    }
   }
 }
