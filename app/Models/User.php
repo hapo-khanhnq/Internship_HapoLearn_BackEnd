@@ -65,6 +65,11 @@ class User extends Authenticatable
 
     public function reviews()
     {
-        return $this->hasMany(Reviwe::class, 'user_id');
+        return $this->hasMany(Review::class, 'user_id');
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class, 'documents_users', 'user_id', 'document_id');
     }
 }

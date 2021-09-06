@@ -76,9 +76,74 @@ $(function () {
   $('.filter-select2-menu').select2();
 
   $("#clearFilter").click(function(){
-    $("input:radio").val("latest").change();
+    //$("input:radio").val("latest").change();
     $(".search-input").val("").change();
     $("#latest").prop("checked", true);
     $("select").val("").change();
+  });
+
+  $('#five-star-progress-bar').width(document.getElementById("five-star").value);
+  $('#four-star-progress-bar').width(document.getElementById("four-star").value);
+  $('#three-star-progress-bar').width(document.getElementById("three-star").value);
+  $('#two-star-progress-bar').width(document.getElementById("two-star").value);
+  $('#one-star-progress-bar').width(document.getElementById("one-star").value);
+
+  if(document.getElementById("course-learning-progress-value")) {
+    $('#course-learning-progress').width(document.getElementById("course-learning-progress-value").value);
+  }
+
+  $('.edit-review-button').click(function(){
+    var key = $(this).attr('id');
+    var rate = document.getElementsByClassName("rating_value")[key].value;
+    var idRate = document.getElementsByClassName("rating_value")[key].id;
+    var idFormEditReview = document.getElementsByClassName("form-edit-review")[key].id;
+    if(rate != 0) {
+      $("#" + idRate + "-" + rate).attr("checked", "true");
+    }
+
+    $("#" + idFormEditReview).validate({
+      rules: {
+        edit_review_message: "required"
+      },
+
+      messages: {
+        edit_review_message: "The review message field is required."
+      },
+
+      submitHandler: function(form) {
+        form.submit();
+      }
+    });
+  });
+
+  if ($("#reviewMessage").hasClass("is-invalid")) {
+    $("#reviews-tab").trigger("click");
+  }
+
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
+  $('.fa-circle').on('click', function (e) {
+    e.preventDefault();
+    var documentId = $(this).attr('data-doccumentId');
+    var url = $(this).attr('data-url');
+    var previewButton = $(this);
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: {
+        'id': documentId,
+      },
+      dataType: 'json', 
+      encode  : true,
+      success: function (response) {
+        console.log(response);
+        previewButton.parent().parent().find("#documentCheckLearned" + documentId.toString()).html('<i class="fas fa-check-circle mr-4 text-success"></i>');
+      }
+    });
   });
 });
