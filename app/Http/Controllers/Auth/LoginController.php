@@ -36,6 +36,10 @@ class LoginController extends Controller
                 return redirect()->back();
             }
         }
+
+        $this->incrementLoginAttempts($request);
+
+        return $this->sendFailedLoginResponse($request);
     }
 
     /**

@@ -1,0 +1,193 @@
+.user-profile-section {
+  .user-img {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+  }
+
+  .upload-avatar-button {
+    top: -50px;
+    right: -8px;
+    font-size: 30px;
+    line-height: 34px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .upload-button {
+    height: 40px;
+    padding-left: 24px;
+    padding-right: 24px;
+    font-family: var(--card_body_fonts_family);
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: -0.05em;
+    color: white;
+    background: var(--header_hoverBackgroundATag_color);
+    box-shadow: var(--main_courses_card_button_box_shadow);
+    border-radius: 22px;
+    border: none;
+
+    &:hover {
+      color: var(--header_aTag_color);
+    }
+  }
+
+  .return-button {
+    height: 40px;
+    padding-left: 24px;
+    padding-right: 24px;
+    font-family: var(--card_body_fonts_family);
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: -0.05em;
+    color: white;
+    background: red;
+    box-shadow: red;
+    border-radius: 22px;
+    border: none;
+
+    &:hover {
+      color: var(--header_aTag_color);
+    }
+  }
+
+  .user-name-email {
+    margin-top: -20px;
+
+    .user-name {
+      font-family: var(--card_body_fonts_family);
+      font-weight: bold;
+      font-size: 25px;
+      line-height: 31px;
+      letter-spacing: -0.02em;
+      color: var(--footer_container_background);
+    }
+
+    .user-email {
+      font-family: var(--card_body_fonts_family);
+      font-size: 18px;
+      line-height: 22px;
+      letter-spacing: -0.02em;
+      color: var(--footer_container_background);
+    }
+  }
+
+  .fa-birthday-cake {
+    color: #F26525;
+  }
+
+  .fa-phone {
+    color: #B2D235;
+  }
+
+  .fa-home {
+    color: #662E93;
+  }
+
+  .user-infor {
+    font-family: var(--card_body_fonts_family);
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.02em;
+    color: var(--footer_container_background);
+  }
+
+  .user-about {
+    font-family: var(--card_body_fonts_family);
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.02em;
+    color: #787B7B;
+  }
+
+  .edit-profile {
+    margin-top: 200px;
+  }
+
+  .title {
+    font-family: var(--card_body_fonts_family);
+    font-weight: bold;
+    font-size: 38px;
+    line-height: 47px;
+    color: var(--footer_container_background);
+    border-bottom: 5px double var(--header_hoverBackgroundATag_color);
+    -webkit-text-stroke-width: 1px;
+  }
+
+  .course-img {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+  }
+
+  .user_course {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+
+    a {
+      font-family: var(--card_body_fonts_family);
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 17px;
+      letter-spacing: -0.02em;
+      color: var(--footer_container_background);
+      text-decoration: none;
+
+      &:hover {
+        color: orangered;
+      }
+    }
+  }
+
+  .add-course-icon {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    border: 1.5px solid var(--header_hoverBackgroundATag_color);
+    background-color: white;
+  }
+
+  .add-course {
+    a {
+      font-family: var(--card_body_fonts_family);
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 17px;
+      letter-spacing: -0.05em;
+      color: var(--header_hoverBackgroundATag_color);
+      text-decoration: none;
+      
+      &:hover {
+        color: orangered;
+      }
+    }
+  }
+
+  .edit-profile-form {
+    label {
+      font-family: var(--card_body_fonts_family);
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 25px;
+      letter-spacing: -0.02em;
+      color: var(--footer_container_background);
+    }
+
+    input,
+    textarea {
+      &::placeholder {
+        font-family: var(--card_body_fonts_family);
+        font-size: 18px;
+        line-height: 22px;
+        letter-spacing: -0.02em;
+        color: #CBCBCB;
+      }
+    }
+  }
+}

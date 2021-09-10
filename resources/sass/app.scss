@@ -21,6 +21,13 @@
 @import 'course_details';
 @import 'pagination';
 @import 'lesson_details';
+@import 'user_profile';
+@import 'user_home';
+@import 'password', 'verify_email';
 
 // select2
 @import "~select2/dist/css/select2.min.css";
+
+// slick-carousel
+@import "~slick-carousel/slick/slick";
+@import "~slick-carousel/slick/slick-theme";

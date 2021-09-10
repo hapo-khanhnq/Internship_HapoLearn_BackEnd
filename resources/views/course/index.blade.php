@@ -69,7 +69,7 @@
                         <div class="form-group mx-1">
                             <select name="rating" id="review" class="filter-select-menu">
                                 <option value="" selected>Review</option>
-                                <option value="asc" @if (request('rating') == config('variables.order_y.asc')) selected @endif>Ascending</option>
+                                <option value="asc" @if (request('rating') == config('variables.order_by.asc')) selected @endif>Ascending</option>
                                 <option value="desc" @if (request('rating') == config('variables.order_by.desc')) selected @endif>Decrease</option>
                             </select>
                         </div>

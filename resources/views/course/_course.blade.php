@@ -17,7 +17,18 @@
                 <div class="course-description">
                     {{ $course->description }}
                 </div>
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-between">
+                    <div class="star mt-4">
+                        @for ($i = 1; $i <= 5; $i++)
+                            @if ($i <= $course->average_of_rate)
+                            <i class="fas fa-star">&nbsp;</i>
+                            @elseif (($i - 0.5) <= $course->average_of_rate)
+                            <i class="fas fa-star-half-alt">&nbsp;</i>
+                            @else
+                            <i class="far fa-star">&nbsp;</i>
+                            @endif
+                        @endfor
+                    </div>
                     <a href="{{ route('course.details', $course->id) }}" class="show-course-details-button">More</a>
                 </div>
             </div>

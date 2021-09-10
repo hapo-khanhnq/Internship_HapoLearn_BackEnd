@@ -71,7 +71,7 @@ $(function () {
     $(".alert").fadeTo(200, 0).slideUp(200, function () {
         $(this).remove();
     });
-  }, 1000);
+  }, 3000);
 
   $('.filter-select2-menu').select2();
 

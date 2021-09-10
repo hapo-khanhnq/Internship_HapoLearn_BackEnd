@@ -143,6 +143,8 @@
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .show-course-details-button {
@@ -327,6 +329,12 @@
 
     .fa-ellipsis-h {
       color:  var(--header_hoverBackgroundATag_color);;
+    }
+  }
+
+  .star {
+    i {
+      color: var(--rating_star_color);
     }
   }
 }

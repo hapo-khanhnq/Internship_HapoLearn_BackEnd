@@ -10,13 +10,13 @@
                  </div>
                  <ul class="left-footer-menu">
                      <li>
-                         <a href="#" class="left-footer-link">Home</a>
+                         <a href="{{ route('home') }}" class="left-footer-link">Home</a>
                      </li>
                      <li>
                          <a href="#" class="left-footer-link">Features</a>
                      </li>
                      <li>
-                         <a href="#" class="left-footer-link">Courses</a>
+                         <a href="{{ route('courses') }}" class="left-footer-link">Courses</a>
                      </li>
                      <li>
                          <a href="#" class="left-footer-link">Blog</a>
