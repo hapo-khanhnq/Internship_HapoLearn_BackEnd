@@ -21,7 +21,6 @@
 
 <body>
     @include('layouts.header')
-    @include('partials.alerts')
     <main>
         @yield('content')
     </main>

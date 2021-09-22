@@ -1,0 +1,42 @@
+.verify-email-container {
+  margin-top: 75px;
+  margin-bottom: 110px;
+
+  .card-header {
+    background-color: white;
+    border: none;
+  }
+
+  .card-header-top {
+    font-family: var(--card_body_fonts_family);
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 37px;
+    letter-spacing: -0.02em;
+    color: var(--header_hoverBackgroundATag_color);
+  }
+
+  .verify-text {
+    font-family: var(--card_body_fonts_family);
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 25px;
+    letter-spacing: -0.02em;
+    color: var(--footer_container_background);
+  }
+
+  .button-resend {
+    font-family: var(--card_body_fonts_family);
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 25px;
+    letter-spacing: -0.02em;
+    color: var(--header_hoverBackgroundATag_color);
+    background-color: white;
+    border: none;
+
+    &:hover {
+      color: lightcoral;
+    }
+  }
+}

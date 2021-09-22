@@ -3,7 +3,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
         </button>
-        <a href="#" class="logo-link"><img src="{{ asset('images/hapo_learn_logo.png') }}" alt="HapoLearn-logo"></a>
+        <a href="{{ route('home') }}" class="logo-link"><img src="{{ asset('images/hapo_learn_logo.png') }}" alt="HapoLearn-logo"></a>
         <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li>
@@ -21,7 +21,7 @@
                     <a href="#" class="header-link">LESSON DETAIL</a>
                 </li>
                 <li>
-                    <a href="#" class="header-link">PROFILE</a>
+                    <a href="{{ route('user.show') }}" class="header-link @if(Route::currentRouteName() == 'user.show') header-link-active @endif">PROFILE</a>
                 </li>
                 <li>
                     <a class="header-link" href="{{ route('logout') }}" id="logout">

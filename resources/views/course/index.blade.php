@@ -22,11 +22,11 @@
                     </div>
                     <div class="col-11 d-flex flex-wrap">
                         <div class="form-group mx-1">
-                            <input type="radio" hidden id="latest" name="filter_status" value="{{ config('variables.filterStatus.latest') }}" checked>
+                            <input type="radio" hidden id="latest" name="filter_status" value="{{ config('variables.filter_status.latest') }}" checked>
                             <label for="latest" class="filter-status d-flex d-flex align-items-center justify-content-center">Latest</label>
                         </div>
                         <div class="form-group mx-1">
-                            <input type="radio" hidden id="oldest" name="filter_status" value="{{ config('variables.filterStatus.oldest') }}" @if (request('filter_status') == config('variables.filterStatus.oldest')) checked @endif>
+                            <input type="radio" hidden id="oldest" name="filter_status" value="{{ config('variables.filter_status.oldest') }}" @if (request('filter_status') == config('variables.filter_status.oldest')) checked @endif>
                             <label for="oldest" class="filter-status d-flex d-flex align-items-center justify-content-center">Oldest</label>
                         </div>
                         <div class="form-group mx-1">
@@ -40,22 +40,22 @@
                         <div class="form-group mx-1">
                             <select name="number_of_learner" id="learner" class="filter-select-menu">
                                 <option value="" selected>Number Of Learner</option>
-                                <option value="asc"  @if (request('number_of_learner') == config('variables.orderBy.asc')) selected @endif>Ascending</option>
-                                <option value="desc" @if (request('number_of_learner') == config('variables.orderBy.desc')) selected @endif>Decrease</option>
+                                <option value="asc"  @if (request('number_of_learner') == config('variables.order_by.asc')) selected @endif>Ascending</option>
+                                <option value="desc" @if (request('number_of_learner') == config('variables.order_by.desc')) selected @endif>Decrease</option>
                             </select>
                         </div>
                         <div class="form-group mx-1">
                             <select name="learn_time" id="time" class="filter-select-menu">
                                 <option value="" selected>Learn time</option>
-                                <option value="asc" @if (request('learn_time') == config('variables.orderBy.asc')) selected @endif>Ascending</option>
-                                <option value="desc" @if (request('learn_time') == config('variables.orderBy.desc')) selected @endif>Decrease</option>
+                                <option value="asc" @if (request('learn_time') == config('variables.order_by.asc')) selected @endif>Ascending</option>
+                                <option value="desc" @if (request('learn_time') == config('variables.order_by.desc')) selected @endif>Decrease</option>
                             </select>
                         </div>
                         <div class="form-group mx-1">
                             <select name="number_of_lesson" id="lesson" class="filter-select-menu">
                                 <option value="" selected>Number Of Lesson</option>
-                                <option value="asc" @if (request('number_of_lesson') == config('variables.orderBy.asc')) selected @endif>Ascending</option>
-                                <option value="desc" @if (request('number_of_lesson') == config('variables.orderBy.desc')) selected @endif>Decrease</option>
+                                <option value="asc" @if (request('number_of_lesson') == config('variables.order_by.asc')) selected @endif>Ascending</option>
+                                <option value="desc" @if (request('number_of_lesson') == config('variables.order_by.desc')) selected @endif>Decrease</option>
                             </select>
                         </div>
                         <div class="form-group mx-1">
@@ -69,8 +69,8 @@
                         <div class="form-group mx-1">
                             <select name="rating" id="review" class="filter-select-menu">
                                 <option value="" selected>Review</option>
-                                <option value="asc" @if (request('rating') == config('variables.orderBy.asc')) selected @endif>Ascending</option>
-                                <option value="desc" @if (request('rating') == config('variables.orderBy.desc')) selected @endif>Decrease</option>
+                                <option value="asc" @if (request('rating') == config('variables.order_by.asc')) selected @endif>Ascending</option>
+                                <option value="desc" @if (request('rating') == config('variables.order_by.desc')) selected @endif>Decrease</option>
                             </select>
                         </div>
                         <div class="form-group mx-1">
