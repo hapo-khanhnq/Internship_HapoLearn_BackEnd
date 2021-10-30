@@ -17,6 +17,17 @@ class Tag extends Model
 
     public function courses()
     {
-        return $this->belongsToMany(Course::class, 'course_id');
+        return $this->belongsToMany(Course::class,'courses_tags', 'tag_id', 'course_id')->distinct();
+    }
+
+    public function isTagOfCourse($courseId)
+    {
+        $checkTag = $this->courses()->wherePivot('course_id', $courseId)->distinct('tag_id')->count();
+
+        if ($checkTag == 1) {
+            return true;
+        }
+
+        return false;
     }
 }

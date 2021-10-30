@@ -35,6 +35,9 @@ class LoginController extends Controller
             if (Auth::user()->role == User::ROLE['student']) {
                 return redirect()->back();
             }
+            if (Auth::user()->role == User::ROLE['teacher']) {
+                return redirect()->route('admin.index');
+            }
         }
 
         $this->incrementLoginAttempts($request);

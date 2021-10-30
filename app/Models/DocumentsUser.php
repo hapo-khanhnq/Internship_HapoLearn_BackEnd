@@ -12,6 +12,6 @@ class DocumentsUser extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'document_id', 'used_id', 'learned'
+        'document_id', 'user_id', 'learned'
     ];
 }

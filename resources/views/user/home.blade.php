@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-image">
                         @if ($course->image_path)
-                            <img class="card-img-top" src="{{ $course->image_path }}" alt="course_image">
+                            <img class="card-img-top" src="{{ asset('storage/courses/' . $course->image_path) }}" alt="course_image" onerror="this.src='{{ asset("images/default_course_img.png") }}'">
                         @else
                             <img class="card-img-top" src="{{ asset('images/default_course_img.png') }}" alt="default_course_image">
                         @endif
@@ -52,7 +52,7 @@
                     <div class="card">
                         <div class="card-image">
                             @if ($course->image_path)
-                                <img class="card-img-top" src="{{ $course->image_path }}" alt="course_image">
+                                <img class="card-img-top" src="{{ asset('storage/courses/' . $course->image_path) }}" alt="course_image" onerror="this.src='{{ asset("images/default_course_img.png") }}'">
                             @else
                                 <img class="card-img-top" src="{{ asset('images/default_course_img.png') }}" alt="default_course_image">
                             @endif

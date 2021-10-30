@@ -7,10 +7,12 @@
 import "slick-carousel/slick/slick.min.js";
 import "select2/dist/js/select2.min.js";
 import "jquery-validation/dist/jquery.validate";
+import "datatables.net-bs4/js/dataTables.bootstrap4";
 
 // Require
 require('./bootstrap');
 require('./main');
+require('./admin');
 
 window.Vue = require('vue').default;
 

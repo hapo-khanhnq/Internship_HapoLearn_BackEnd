@@ -24,7 +24,9 @@ class UserController extends Controller
         if ($request->hasFile('avatar')) {
             $oldAvatar = $user->avatar;
             $avatar = time() . "." . $request->avatar->getClientOriginalExtension();
-            unlink(public_path('storage\user/' . $oldAvatar));
+            if($oldAvatar) {
+                unlink(public_path('storage\user/' . $oldAvatar));
+            }
             $request->avatar->move('storage\user', $avatar);
             $user->update(['avatar' => $avatar]);
         }

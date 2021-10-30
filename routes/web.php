@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CourseController as AdminCourseController;
+use App\Http\Controllers\Admin\DocumentController as AdminDocumentController;
+use App\Http\Controllers\Admin\LessonController as AdminLessonController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DocumentController;
@@ -44,3 +49,14 @@ Route::post('/document-learn', [DocumentController::class, 'learn'])->name('docu
 Route::get('user/profile', [UserController::class, 'show'])->name('user.show')->middleware(['auth', 'verified']);
 Route::put('user/profile/update-avatar/{id}', [UserController::class, 'updateAvatar'])->name('user.update.avatar');
 Route::put('user/profile/update', [UserController::class, 'updateInformation'])->name('user.update.information');
+
+Route::prefix('admin')->as('admin.')->middleware('auth.admin')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::resource('users', AdminUserController::class);
+    Route::resource('courses', AdminCourseController::class);
+    Route::resource('lessons', AdminLessonController::class);
+    Route::post('/document/upload', [AdminDocumentController::class, 'upload'])->name('document.upload');
+    Route::get('/document/download/{file}', [AdminDocumentController::class, 'download'])->name('document.download');
+    Route::get('/document/details/{id}', [AdminDocumentController::class, 'details'])->name('document.details');
+    Route::delete('document/delete/{id}', [AdminDocumentController::class, 'destroy'])->name('document.destroy');
+});

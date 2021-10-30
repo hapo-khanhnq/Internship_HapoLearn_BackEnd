@@ -10,7 +10,7 @@
             <div class="col-8">
                 <div class="my-4 bg-secondary course-image">
                     @if ($course->image_path)
-                    <img class="course-img" src="{{ $course->image_path }}" alt="course_image">
+                    <img class="course-img" src="{{ asset('storage/courses/' . $course->image_path) }}" alt="course_image" onerror="this.src='{{ asset("images/default_course_img.png") }}'">
                     @else
                     <img class="course-img" src="{{ asset('images/default_course_img.png') }}" alt="default_course_image">
                     @endif

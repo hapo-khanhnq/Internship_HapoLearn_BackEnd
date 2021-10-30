@@ -10,7 +10,7 @@
             <div class="col-8">
                 <div class="my-4 bg-secondary course-image">
                     @if ($lesson->course->image_path)
-                    <img class="course-img" src="{{ $lesson->course->image_path }}" alt="course_image">
+                    <img class="course-img" src="{{ asset('storage/courses/' . $lesson->course->image_path) }}" alt="course_image" onerror="this.src='{{ asset("images/default_course_img.png") }}'">
                     @else
                     <img class="course-img" src="{{ asset('images/default_course_img.png') }}" alt="default_course_image">
                     @endif
@@ -113,7 +113,7 @@
                                 </div>
                             </div>
                             @endforeach
-                            <form action="{{ route('document.upload') }}" method="POST" enctype="multipart/form-data" class="mt-4">
+                            <!-- <form action="{{ route('document.upload') }}" method="POST" enctype="multipart/form-data" class="mt-4">
                                 @csrf
                                 <b>Test upload file</b>
                                 <input type="hidden" name="lessonId" value="{{ $lesson->id }}">
@@ -126,7 +126,7 @@
                                 </select>
                                 <input type="file" name="file">
                                 <button type="submit">Submit</button>
-                            </form>
+                            </form> -->
                         </div>
                         <div class="container tab-pane fade px-2" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                             <div class="pt-3 pb-2 px-2 reviews-title">

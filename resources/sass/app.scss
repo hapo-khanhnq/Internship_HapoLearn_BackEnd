@@ -24,6 +24,7 @@
 @import 'user_profile';
 @import 'user_home';
 @import 'password', 'verify_email';
+@import 'admin_add_user_course';
 
 // select2
 @import "~select2/dist/css/select2.min.css";
@@ -31,3 +32,9 @@
 // slick-carousel
 @import "~slick-carousel/slick/slick";
 @import "~slick-carousel/slick/slick-theme";
+
+// admin-lte
+@import '~admin-lte/dist/css/adminlte.css';
+
+//datatable
+@import '~datatables.net-bs4/css/dataTables.bootstrap4.css';

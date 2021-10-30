@@ -23,7 +23,7 @@ class Course extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'courses_tags', 'course_id', 'tag_id');
+        return $this->belongsToMany(Tag::class, 'courses_tags', 'course_id', 'tag_id')->distinct();
     }
 
     public function users()
@@ -87,12 +87,16 @@ class Course extends Model
         if (Auth::user()) {
             $checkStudent = $this->users()->wherePivot('user_id', Auth::user()->id)->count();
         }
-
+ 
         if ($checkStudent == config('variables.student_in_course')) {
             return true;
         }
 
         return false;
+    }
+
+    public function getUsersOfCourseOfOneAdmin($adminUserId) {
+        return $this->users()->where('user_id', '<>', $adminUserId)->get();
     }
 
     public function getNumberOfRate($rate)

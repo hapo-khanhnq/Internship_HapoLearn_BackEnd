@@ -337,43 +337,45 @@
       color: var(--rating_star_color);
     }
   }
-}
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-  font-family: var(--font_Open_Sans);
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 22px;
-  color: var(--footer_container_background);
-  padding: 6px 12px 6px 15px;
-}
-.select2-container .select2-selection--single {
-  width: 180px !important;
-  height: 35px !important;
-  border: 1px solid var(--filter_select_menu_boder_color)!important;
-  border-radius: 0.25rem;
-}
-.select2-selection__arrow {
-  height: 35px !important;
-}
-
-.select2-container--default .select2-selection--single .select2-selection__arrow{
-  display: flex;
-  align-items: center;
-
-  b {
-    background-image: url(../assets/images/dropdown_icon.png);
-    background-repeat: no-repeat;
-    background-color: transparent;
-    background-size: contain;
-    border: none;
-    height: 12px;
-    width: 12px;
-    top: auto;
-    left: auto;
-    margin-top: 1px;
-    margin-left: 5px;
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    font-family: var(--font_Open_Sans);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--footer_container_background);
+    //padding: 6px 12px 6px 15px;
+    padding-top: 1px;
+    padding-left: 3px;
+  }
+  .select2-container .select2-selection--single {
+    width: 180px !important;
+    height: 35px !important;
+    border: 1px solid var(--filter_select_menu_boder_color)!important;
+    border-radius: 0.25rem;
+  }
+  .select2-selection__arrow {
+    height: 35px !important;
+  }
+  
+  .select2-container--default .select2-selection--single .select2-selection__arrow{
+    display: flex;
+    align-items: center;
+  
+    b {
+      background-image: url(../assets/images/dropdown_icon.png);
+      background-repeat: no-repeat;
+      background-color: transparent;
+      background-size: contain;
+      border: none;
+      height: 12px;
+      width: 12px;
+      top: auto;
+      left: auto;
+      margin-top: 1px;
+      margin-left: 8px;
+    }
   }
 }
 
@@ -542,7 +544,9 @@
 
   .select2-container--default .select2-selection--single .select2-selection__rendered {
     font-size: 11px;
-    padding-top: 3px;
+    // padding-top: 3px;
+    padding-top: 0px;
+    padding-left: 4px;
   }
 
   .select2-container .select2-selection--single {
